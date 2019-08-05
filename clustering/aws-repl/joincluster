@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# joincluster   joins and leaves the cluster
+#
+# chkconfig:   345 95 4
+# description: Start an agraph server and then joins the cluster
+#
+
+##
+
+lockfile=/var/lock/subsys/joincluster
+awsrepl=/home/ec2-user/aws-repl
+
+case "$1" in
+   start)
+      cd $awsrepl
+      su ec2-user -c "(./start.sh; sleep 10; ./join.sh)" > /var/tmp/join.out 2>&1
+      touch $lockfile
+      echo cluster joined
+      exit 0
+      ;;
+   stop)
+      cd $awsrepl
+      su ec2-user -c ./remove-instance.sh
+      rm -f $lockfile
+      echo exiting cluster
+      exit 0
+      ;;
+   *)
+      echo unknown command
+      exit 1
+esac
+
+   
