@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  controlling:
+    image: DockerAccount/agrepl:latest
+    environment:
+       - Controlling=yes
+    networks:
+       - replnet
+    ports:
+       - 10035:10035
+    tmpfs:
+      - /tmp:size=1g
+    volumes:
+    - type: tmpfs
+      target: /dev/shm
+
+networks:
+   replnet:
+      external: true
+
+
+
+
+       

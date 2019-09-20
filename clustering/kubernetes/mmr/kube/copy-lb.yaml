@@ -1,0 +1,22 @@
+#
+# This will create a service with an external IP address
+# through which one can access a randomly chosen copy instance.
+# There is no support for sessions so don't create an agraph session
+# using the external IP address.  This is mainly useful for
+# simple non-session transactions or for queries to one of the
+# copies of the repo
+#
+# The external IP will be chosen by the cloud provider
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: copy-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 10035
+    targetPort: 10035
+  selector:
+    app: copy
+

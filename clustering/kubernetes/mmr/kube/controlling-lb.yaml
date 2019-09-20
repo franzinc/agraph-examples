@@ -1,0 +1,21 @@
+#
+# This will create a service with an external IP through which
+# one can access the controlling instance.
+# Since there's just one controlling instance we don't need to worry
+# about the fact that the load balancer has no support for sessions.
+#
+# The external IP will be chosen by the cloud provider
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: controlling-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 10035
+    targetPort: 10035
+  selector:
+    app: controlling
+
+

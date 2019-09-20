@@ -1,0 +1,22 @@
+#
+# this service exposes the internal IP address
+# of the controlling instance and makes it
+# available via dns at the name 'controlling'
+# using the dns search list
+#
+apiVersion: v1
+kind: Service
+metadata:
+ name: controlling
+spec:
+ clusterIP:  None
+ selector:
+   app: controlling
+ ports:
+ - name: http
+   port: 10035
+   targetPort: 10035
+   
+   
+ 
+   
