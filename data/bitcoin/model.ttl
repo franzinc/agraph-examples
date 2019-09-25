@@ -1,0 +1,305 @@
+@base <https://raw.githubusercontent.com/franzinc/agraph-examples/master/data/bitcoin/model.ttl#>.
+
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+
+
+#-------------------------------------------------------------------------------
+# Generic properties, applicable to all entities in the model.
+<index>
+        rdf:type rdfs:Property;
+        rdfs:label "index";
+        rdfs:comment "Index of the given entity within the parent entity.";
+        rdfs:range xsd:integer.
+
+#-------------------------------------------------------------------------------
+# Block is a class of entities that aggregate Transactions; contains
+# header and an ordered set of transactions. There exists a mapping
+# `nextBlock: Block -> Block`, which has an inverse `prevBlock` and
+# thus introduces ordering of the blocks.
+
+<Block>
+        rdf:type     rdfs:Class;
+        rdfs:label   "Block";
+        rdfs:comment "Bitcoin block that contains header and an ordered set of transactions".
+
+<hash>
+        rdf:type     rdfs:Property;
+        rdfs:label   "hash";
+        rdfs:comment "Hex-encoded double-hash of the block header that is used in PoW to chain blocks.";
+        rdfs:domain  <Block>;
+        rdfs:range   xsd:string.
+
+<version>
+        rdf:type     rdfs:Property;
+        rdfs:label   "version";
+        rdfs:comment "Version of the block which represents a set of supported features.";
+        rdfs:domain  <Block>;
+        rdfs:range   xsd:integer.
+
+<height>
+        rdf:type     rdfs:Property;
+        rdfs:label   "height";
+        rdfs:comment "Height of the block is an index of the block in the chain, starting from 0.";
+        rdfs:domain  <Block>;
+        rdfs:range   xsd:integer.
+
+# <size>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "size";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+# <strippedSize>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "strippedSize";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+# <weight>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "weight";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+# <merkleRoot>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "merkleRoot";
+#         rdfs:comment "Root hash of the Merkle tree of block's transactions.";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:string.
+
+<transaction>
+        rdf:type     rdfs:Property;
+        rdfs:label   "transaction";
+        rdfs:comment "Transaction-Block membership relation.";
+        rdfs:domain  <Block>;
+        rdfs:range   <Transaction>.
+
+# <transactionCount>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "transactionCount";
+#         rdfs:comment "Number of transactions in the block.";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+<time>
+        rdf:type     rdfs:Property;
+        rdfs:label   "time";
+        rdfs:comment "Unixtime value at the moment of construction of the block.";
+        rdfs:domain  <Block>;
+        rdfs:range   xsd:integer.
+
+# <medianTime>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "medianTime";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+# <bits>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "bits";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+# <difficulty>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "difficulty";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+# <chainwork>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "chainwork";
+#         rdfs:comment "";
+#         rdfs:domain  <Block>;
+#         rdfs:range   xsd:integer.
+
+<prevBlock>
+        rdf:type      rdfs:Property;
+        rdfs:label    "prevBlock";
+        rdfs:comment  "Introduce ordering into set of Bitcoin blocks.";
+        rdfs:domain   <Block>;
+        rdfs:range    <Block>.
+
+<nextBlock>
+        rdf:type      rdfs:Property;
+        rdfs:label    "nextBlock";
+        rdfs:comment  "Helper inverse of prevBlock property.";
+        rdfs:domain   <Block>;
+        rdfs:range    <Block>;
+        owl:inverseOf <prevBlock>.
+
+
+#-------------------------------------------------------------------------------
+# Transaction is a class of entities containing headers and sets of
+# transaction inputs/outputs.
+
+<Transaction>
+        rdf:type     rdfs:Class;
+        rdfs:label   "Transaction";
+        rdfs:comment "Recorded change of the UTXO set.".
+
+<txid>
+        rdf:type     rdfs:Property;
+        rdfs:label   "txid";
+        rdfs:comment "Hash of the transaction which is used to uniquely identify it.";
+        rdfs:domain  <Transaction>;
+        rdfs:range   xsd:string.
+
+# <version>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "version";
+#         rdfs:comment "";
+#         rdfs:domain  <Transaction>;
+#         rdfs:range   xsd:integer.
+
+# <size>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "size";
+#         rdfs:comment "";
+#         rdfs:domain  <Transaction>;
+#         rdfs:range   xsd:integer.
+
+# <vsize>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "vsize";
+#         rdfs:comment "";
+#         rdfs:domain  <Transaction>;
+#         rdfs:range   xsd:integer.
+
+# <weight>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "weight";
+#         rdfs:comment "";
+#         rdfs:domain  <Transaction>;
+#         rdfs:range   xsd:integer.
+
+<lockTime>
+        rdf:type     rdfs:Property;
+        rdfs:label   "lockTime";
+        rdfs:comment "Index of the minimal block or unixtime this transaction is allowed to be included.";
+        rdfs:domain  <Transaction>;
+        rdfs:range   rdf:integer.
+
+<input>
+        rdf:type     rdfs:Property;
+        rdfs:label   "input";
+        rdfs:comment "Input-Transaction membership relation.";
+        rdfs:domain  <Transaction>;
+        rdfs:range   <Input>.
+
+<output>
+        rdf:type     rdfs:Property;
+        rdfs:label   "output";
+        rdfs:comment "Output-Transaction membership relation.";
+        rdfs:domain  <Transaction>;
+        rdfs:range   <Output>.
+
+
+#-------------------------------------------------------------------------------
+# TxOutput represents an abstract chunk of value in the Bitcoin system
+# and consists of the integer amount of atomic bitcoin units and a
+# locking script.
+
+<TxOutput>
+        rdf:type     rdfs:Class;
+        rdfs:label   "TxOutput";
+        rdfs:comment "Transaction output - value representation in Bitcoin system.".
+        
+<amount>
+        rdf:type     rdfs:Property;
+        rdfs:label   "amount";
+        rdfs:comment "Amount of atomic units locked in this UTXO.";
+        rdfs:domain  <TxOutput>;
+        rdfs:range   xsd:integer.
+
+<lockScript>
+        rdf:type     rdfs:Property;
+        rdfs:label   "lockScript";
+        rdfs:comment "Script that describes an unlocking condition of the given output.";
+        rdfs:domain  <TxOutput>;
+        rdfs:range   <Script>.
+
+
+#-------------------------------------------------------------------------------
+# TxInput is a reference to the existing unspent transaction output
+# and an unlocking script for that output.
+
+<TxInput>
+        rdf:type     rdfs:Class;
+        rdfs:label   "TransactionOutput";
+        rdfs:comment "Unspent transaction output - value representation withing Bitcoin system.".
+
+<outputHash>
+        rdf:type     rdfs:Property;
+        rdfs:label   "outputHash";
+        rdfs:comment "Hash of the transaction whose output is spent by this input.";
+        rdfs:domain  <TxInput>;
+        rdfs:range   xsd:string.
+
+<outputIndex>
+        rdf:type     rdfs:Property;
+        rdfs:label   "outputIndex";
+        rdfs:comment "Index of the transcation output which is spent by this input.";
+        rdfs:domain  <TxInput>;
+        rdfs:range   xsd:integer.
+        
+<unlockScript>
+        rdf:type     rdfs:Property;
+        rdfs:label   "unlockScript";
+        rdfs:comment "Script that is appended to locking script in order to unlock the UTXO.";
+        rdfs:domain  <TxInput>;
+        rdfs:range   <Script>.
+
+# <sequence>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "sequence";
+#         rdfs:comment "";
+#         rdfs:domain  <TxInput>;
+#         rdfs:range   xsd:integer.
+
+#------------------------------------------------------------------------------
+# Script is a program written in simple stack Bitcoin Script language
+# and is used # to express value-locking challenges and their solutions.
+
+# <Script>
+#         rdf:type     rdfs:Class;
+#         rdfs:label   "TransactionOutput";
+#         rdfs:comment "Unspent transaction output - value representation withing Bitcoin system.".
+
+# <scriptAssembly>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "scriptAssembly";
+#         rdfs:comment "Readable representation of Bitcoin script program.";
+#         rdfs:domain  <TxInput>;
+#         rdfs:range   xsd:string.
+
+# <scriptHex>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "scriptHex";
+#         rdfs:comment "Hexadecimal representation of serialized Bitcoin script program.";
+#         rdfs:domain  <TxInput>;
+#         rdfs:range   xsd:string.
+        
+# <type>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "type";
+#         rdfs:comment "";
+#         rdfs:domain  <TxInput>;
+#         rdfs:range   xsd:string.
+
+# <addresses>
+#         rdf:type     rdfs:Property;
+#         rdfs:label   "addresses";
+#         rdfs:comment "";
+#         rdfs:domain  <TxInput>;
+#         rdfs:range   xsd:string.
