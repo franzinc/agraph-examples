@@ -1,0 +1,2 @@
+agraph-python==101.0.1
+python-bitcoinlib==0.10.1
