@@ -10,3 +10,6 @@ These are support files for setting up a multi-master replication cluster on AWS
 
 A terraform script for creating a Multi-Master replication cluster with a load balancer distributing work to the instances.
 
+## misc
+
+Generic clustering-related examples (load balancing with NGINX, etc).
