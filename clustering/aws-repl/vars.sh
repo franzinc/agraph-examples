@@ -6,6 +6,7 @@ authpassword=xyzzy
 reponame=myrepl
 #
 agraphroot=/home/ec2-user/agraph
+agtool=$agraphroot/bin/agtool
 # compute our ip address
 myip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 
