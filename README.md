@@ -11,3 +11,7 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
     * [MMR Replication Clusters in Kubernetes and Docker Swarm](clustering/kubernetes/mmr/kubernetes-mmr.md)
 * Data examples
   * [Bitcoin RDF model](data/bitcoin)
+
+* Generate AllegroGraph databases
+  * [Weather data](generators/weather/weather.md)
+  
