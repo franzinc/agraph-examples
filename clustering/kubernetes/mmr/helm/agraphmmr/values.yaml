@@ -1,0 +1,58 @@
+# Default values for aghelmmmr
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# useful values for pullPolicy
+#  Always   - use this during development of the repository
+#  IfNotPresent - use this when repository is stable
+#
+
+# image.repository is a Docker image containing AllegroGraph and the scripts to set up replication
+# image.pullPolicy determines whether Docker will use the cached version of the Docker image
+#  or download a new version.
+#  Useful values for image.pullPolicy:
+#    Always   - use this during development of the Docker image
+#    IfNotPresent - use this when Docker image is stable
+# 
+image:
+  repository: franzinc/agmmr:1.0
+  pullPolicy: IfNotPresent
+
+# replicas is the number of AllegroGraph servers to start up that will join the cluster
+# and replicate the repository of the controlling instance.
+replicas: 2
+
+# dataStorage is the amount of persistent storage space to allocate for the controlling instance's
+# repository data.   
+dataStorage: 20Gi
+
+
+# these values are put in a secrets file
+# user is the username of the admin account for the AllegroGraph server
+user: test
+# password is the password of the admin account. 
+password: xyzzy
+# port is the HTTP port on which the AllegroGraph server will listen.
+port: 10035
+# reponame is the name of the repository in the root catalog on the controlling instance
+#  that will be replicated in each of replicas
+reponame: myrepl
+#
+# to insert the AllegroGraph license here you must
+# use the yaml conventions for a multi-line value.
+# This means using the pipe character and indenting
+# each line, for example:
+#
+# license: |
+#  Licensee Spacely Sprockets
+#  LicenseLimit no-limit
+#  LicenseExpires no-expiration
+#  <LicenseCode>
+#  1244234134123412341234123412341234432234
+#  3434245251351345234523452345234523452344
+#  9087498234148239481239482394123982349123
+#  </LicenseCode>
+#
+# license is the license to run the AllegroGraph server.  AllegroGraph will run
+#  without a license but will then have limited capabilities.
+license:

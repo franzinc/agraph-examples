@@ -1,0 +1,23 @@
+apiVersion: v2
+name: agraphmmr
+description: An AllegroGraph MMR cluster Helm chart for Kubernetes
+
+type: application
+home: https://github.com/franzinc/agraph-examples/tree/master/clustering/kubernetes/mmr
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 1.0.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application.
+appVersion: 1.0.0
+
+icon: https://franz.com/images/logo.png
+
+maintainers:
+ - name: "Franz Inc"
+   email: "support@franz.com"
+
+
+

@@ -1,0 +1,18 @@
+#
+#
+apiVersion: v1
+kind: Service
+metadata:
+ name: {{ .Release.Name }}-copy
+spec:
+ clusterIP: None
+ selector:
+   app: {{ .Release.Name }}-copy
+ ports:
+ - name: {{ .Release.Name }}-main
+   port: {{ .Values.port }}
+   targetPort: {{ .Values.port }}
+   
+   
+ 
+   
