@@ -52,6 +52,12 @@
 ;;   then resources will be used in place of blank nodes making the respository
 ;;   easier to load from a serialized copy if it.
 ;;
+;;   Another argument to build-db is :attributes-p
+;;   The default value is nil but if given a true value it will add an attribute
+;;   to each quad thus allowing for the testing of loading and exporting of
+;;   quads with attributes.  The attribute is "name" whose value is the name
+;;   of the station.
+;;
 ;;  step 3:
 ;;   do queries on the database.
 ;;   
@@ -149,16 +155,20 @@
       
 
 
-(defun build-station (name min max pct-rain lat long blank-nodes-p)
+(defun build-station (name min max pct-rain lat long blank-nodes-p attributes-p)
   ;; min/max are temperatures in Fahrenheit
   ;; pct rain is a number from 0  to 1.0
 
-  (let ((station (resource (format nil "~ast_~a" *wx-namespace* name))))
-    (add-triple station !rdf:type !wx:station :g station)
-    (add-triple station !rdf:label (literal name) :g station)
+  (let ((station (resource (format nil "~ast_~a" *wx-namespace* name)))
+        (attributes (if* attributes-p
+                       then `(("name" . ,name)))))
+                            
+    (add-triple station !rdf:type !wx:station :g station :attributes attributes)
+    (add-triple station !rdf:label (literal name) :g station :attributes attributes)
     (add-triple station !wx:location
                 (geo-plist->geo *lat-long-nd-subtype* :lat lat :lon long)
-                :g station)
+                :g station
+                :attributes attributes)
            
     (do ((time *time-min* (+ time *sample-interval*))
          
@@ -167,19 +177,22 @@
                          #.(* 24 60 60))))
         ((> time *time-max*))
       (let ((bn (get-new-blank-node blank-nodes-p)))
-        (add-triple bn !rdf:type !wx:observation :g station)
-        (add-triple bn !wx:time  (value->upi (cons time 0) :date-time) :g station)
+        (add-triple bn !rdf:type !wx:observation :g station :attributes attributes)
+        (add-triple bn !wx:time  (value->upi (cons time 0) :date-time) :g station
+                    :attributes attributes)
         (add-triple bn !wx:temp  (value->upi (compute-temp min max in-day)
                                              :integer)
                     :g station
+                    :attributes attributes
                     )
         
         (if* (<= (random 1.0  *wx-random-state*) pct-rain)
            then ;; it rained
-                (add-triple bn !wx:wx !wx:rain :g station)
+                (add-triple bn !wx:wx !wx:rain :g station :attributes attributes)
                 ;; rain amount from 0 to 10 mm
-                (add-triple bn !wx:precip (value->upi (truncate (random 10 *wx-random-state*)) :integer) :g station)
-           else (add-triple bn !wx:wx !wx:clear :g station))
+                (add-triple bn !wx:precip (value->upi (truncate (random 10 *wx-random-state*)) :integer) :g station
+                            :attributes attributes)
+           else (add-triple bn !wx:wx !wx:clear :g station :attributes attributes))
         ))))
 
 (defun get-new-blank-node (real-bn)
@@ -208,7 +221,8 @@
           
           
                 
-(defun build-db (&key (dbname *dbname*)  (stations 100) (blank-nodes-p t))
+(defun build-db (&key (dbname *dbname*)  (stations 100) (blank-nodes-p t)
+                      (attributes-p nil))
   (create-triple-store dbname)
   (unwind-protect
       (progn
@@ -218,6 +232,11 @@
                                    :install t))
         (add-geospatial-subtype-to-db *lat-long-nd-subtype* *db*)
         
+        
+        (if* attributes-p
+           then ;; store station name as an attribute as well
+                ;; just to test out store/export of attributes
+                (define-attribute "name"))
         
         (setup-mappings)
         (commit-triple-store)
@@ -238,6 +257,7 @@
                                (random *lat-max* *wx-random-state*)
                                (random *long-max* *wx-random-state*)
                                blank-nodes-p
+                               attributes-p
                                )
       
                 (if* (zerop (mod (1+ i) 100)) 
