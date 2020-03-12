@@ -1,0 +1,43 @@
+#
+# stateful set of copies of the copy instance
+#
+
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-copy
+spec:
+  serviceName: {{ .Release.Name }}-copy
+  replicas: {{ .Values.replicas }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-copy
+    spec:
+        volumes:
+         - name: shm
+           emptyDir:
+             medium: Memory
+         - name: secrets
+           secret:
+               secretName: {{ .Release.Name }}-agraphsecrets
+        containers:
+        - name: {{ .Release.Name }}-controlling
+          image: {{ .Values.image.repository }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: {{ .Values.port }}
+            initialDelaySeconds: 30
+          volumeMounts:
+          - name: shm
+            mountPath: /dev/shm
+          - name: secrets
+            mountPath: /app/secrets
+            readOnly: true
+          env:
+          - name: ControllingHost
+            value: "{{ .Release.Name }}-controlling"
+
+

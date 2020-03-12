@@ -1,0 +1,64 @@
+ {{ .Chart.Name }} -  Helm chart for running an AllegroGraph cluster with Multi-Master Replication
+
+The full details on this chart can be found at
+
+  https://github.com/franzinc/agraph-examples/blob/master/clustering/kubernetes/mmr/kubernetes-mmr.md
+
+That contains a description of how the chart works as well as how to modify what it does.
+
+
+
+Once the chart is installed you can access the controlling instance via a load balancer
+
+Run
+
+% kubectl get svc
+
+To find the address of the controlling-loadbalancer.
+
+It will take a few minutes for the external IP address to be allocated and
+show by this kubectl command.
+
+For example:
+
+NAME                            TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)           AGE
+sample-controlling-loadbalancer LoadBalancer   10.12.8.217   104.155.148.58   10035:32240/TCP   113s
+
+Given the above you can access the controlling instance through the load balancer
+at:
+
+http://104.155.148.58:10035
+
+The default username is "test" and the default password is "xyzzy"
+
+You can do read and write access of the MMR cluster through the controlling-loadbalancer.
+
+There is also a copy-loadbalancer.  This distributes work to all the copy nodes.
+The load balancer does not yet have session support so you should only
+use the copy-loadbalancer for queries to the repository.
+
+We also have a created a copy-0-loadbalancer as a demonstration of how to
+communicate with a single specified copy instance.  Since this load
+balancer is always talking to the same instance one can do read and write accesses through
+this load balancer.   However the copy instances can be deleted by
+kubernetes if you reduce the number of replicas defined.
+
+One way to change the number of replicas is to edit values.yaml
+and specify the desired number of replicas and then
+
+% helm upgrade releasename chart
+
+where releasename and chart are the same as
+in the command you used to install the chart
+
+% helm install releasename chart
+
+
+
+
+
+
+
+
+
+

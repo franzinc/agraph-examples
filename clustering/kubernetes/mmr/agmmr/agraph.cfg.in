@@ -1,0 +1,17 @@
+# AllegroGraph configuration file
+Port Config_Port
+BaseDir /app/agraph
+SettingsDirectory data/settings
+LogDir log
+PidFile data/agraph.pid
+InstanceTimeout 604800
+RunAs agraph
+
+<RootCatalog>
+ Main /app/rootcatalog
+</RootCatalog>
+
+<SystemCatalog>
+ Main data/systemcatalog
+ InstanceTimeout 10
+</SystemCatalog>

@@ -1,0 +1,55 @@
+#
+# stateful set of controlling instance
+#
+
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-controlling
+spec:
+  serviceName: {{ .Release.Name }}-controlling
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-controlling
+    spec:
+        containers:
+        - name: {{ .Release.Name }}-controlling
+          image: {{ .Values.image.repository }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: {{ .Values.port }}
+            initialDelaySeconds: 30
+          volumeMounts:
+          - name: shm
+            mountPath: /dev/shm
+          - name: {{ .Release.Name }}-data
+            mountPath: /app/rootcatalog
+          - name: secrets
+            mountPath: /app/secrets
+            readOnly: true
+          env:
+          - name: Controlling
+            value: "yes"
+          - name: ControllingHost
+            value: "{{ .Release.Name }}-controlling"
+        volumes:
+        - name: shm
+          emptyDir:
+             medium: Memory
+        - name: secrets
+          secret:
+             secretName: {{ .Release.Name }}-agraphsecrets
+  volumeClaimTemplates:
+         - metadata:
+            name: {{ .Release.Name }}-data
+           spec:
+            resources:
+              requests:
+                storage: {{ .Values.dataStorage }}
+            accessModes:
+            - ReadWriteOnce
+
