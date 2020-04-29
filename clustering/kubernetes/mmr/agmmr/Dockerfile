@@ -8,7 +8,7 @@ FROM centos:7
 # ensure we have a good set of network programs installed
 RUN yum -y install net-tools iputils bind-utils wget hostname openssl
 
-ARG agversion=6.6.0
+ARG agversion=7.0.0
 ARG testrelease=
 
 ENV agdistfile=agraph-${agversion}-linuxamd64.64.tar.gz

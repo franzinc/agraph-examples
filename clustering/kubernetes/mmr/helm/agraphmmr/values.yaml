@@ -15,7 +15,7 @@
 #    IfNotPresent - use this when Docker image is stable
 # 
 image:
-  repository: franzinc/agmmr:1.0
+  repository: franzinc/agmmr:7.0.0
   pullPolicy: IfNotPresent
 
 # replicas is the number of AllegroGraph servers to start up that will join the cluster
