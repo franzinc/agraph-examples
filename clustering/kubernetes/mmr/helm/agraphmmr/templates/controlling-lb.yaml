@@ -17,5 +17,3 @@ spec:
     targetPort: {{ .Values.port }}
   selector:
     app: {{ .Release.Name }}-controlling
-
-

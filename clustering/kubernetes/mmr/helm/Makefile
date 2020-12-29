@@ -5,8 +5,8 @@
 # to see the steps you must perform to install the cluster
 #
 
-name ?= --generate-name
-
+name = agraph-mmr
+namespace = agraph-ns
 info:
 	@echo
 	@echo You can install the mmr cluster in kubernetes
@@ -26,11 +26,20 @@ info:
 
 
 install:
-	helm install $(name) ./agraphmmr
+	helm install $(name) ./agraphmmr --create-namespace --namespace $(namespace)
+
+# rwy added:
+re-install:
+	helm upgrade --install $(name) ./agraphmmr --namespace $(namespace)
+
 
 install-with-license:
-	helm install --set-file license=$(file) $(name) ./agraphmmr
+	helm install --set-file license=$(file) $(name) ./agraphmmr --namespace $(namespace)
 
+
+# rwy added:
+uninstall:
+	helm uninstall $(name) --namespace $(namespace)
 
 ## make a Helm repository with the agraphmmr chart in it
 repository:

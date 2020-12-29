@@ -1,14 +1,23 @@
 #
 # stateful set of controlling instance
 #
-
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Release.Name }}-controlling
 spec:
+  # rwy: selector added
+  selector:
+    matchLabels:
+#      # has to match .spec.template.metadata.labels
+      app: {{ .Release.Name }}-controlling
   serviceName: {{ .Release.Name }}-controlling
   replicas: 1
+  #
+  # Update Strategy
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -18,6 +27,12 @@ spec:
         - name: {{ .Release.Name }}-controlling
           image: {{ .Values.image.repository }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # CPU limits for the Horizontal Pod Autoscaler, HPA
+          resources:
+            limits:
+              cpu: {{ .Values.cpu.limit}}
+            requests:
+              cpu: {{ .Values.cpu.request}}
           livenessProbe:
             httpGet:
               path: /version
@@ -52,4 +67,3 @@ spec:
                 storage: {{ .Values.dataStorage }}
             accessModes:
             - ReadWriteOnce
-
