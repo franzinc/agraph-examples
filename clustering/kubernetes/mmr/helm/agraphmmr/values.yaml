@@ -15,17 +15,12 @@
 #    IfNotPresent - use this when Docker image is stable
 # 
 image:
-  repository: franzinc/agmmr:7.0.0
-  pullPolicy: IfNotPresent
-
-# replicas is the number of AllegroGraph servers to start up that will join the cluster
-# and replicate the repository of the controlling instance.
-replicas: 2
+ repository: franzinc/agmmr:7.0.4
+ pullPolicy: IfNotPresent
 
 # dataStorage is the amount of persistent storage space to allocate for the controlling instance's
 # repository data.   
 dataStorage: 20Gi
-
 
 # these values are put in a secrets file
 # user is the username of the admin account for the AllegroGraph server
@@ -37,6 +32,31 @@ port: 10035
 # reponame is the name of the repository in the root catalog on the controlling instance
 #  that will be replicated in each of replicas
 reponame: myrepl
+
+# Container deployment pod CPU limits
+cpu:
+  limit:  1
+  request: 0.7
+
+# Pod update behaviour; update strategy values
+update:
+    # the bootup time of your application, Kubernetes waits specific time til the next pod creation.
+    minReadySeconds: 10
+    # ex. maxSurge: 1 means that there will be at most 4 pods during the update process if replicas is 3
+    maxSurge: 1
+    # ex. maxUnavailable: 1 means that there will be at most 1 pod unavailable during the update process
+    maxUnavailable: 0
+
+
+
+# replicas is the number of AllegroGraph servers to start up that will join the cluster
+# and replicate the repository of the controlling instance.
+# Horizontal Auto Scaler for deployment ...copy-ss...
+hpa:
+  minReplicas: 1 # min deployment pods
+  maxReplicas: 5 # max deployment pods
+  # Start deployment pod if targetCPUUtilizationPercentage*cpu-request => spin a new pod
+  targetCPUUtilizationPercentage: 90
 #
 # to insert the AllegroGraph license here you must
 # use the yaml conventions for a multi-line value.

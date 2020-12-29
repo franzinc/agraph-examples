@@ -1,43 +1,63 @@
 #
 # stateful set of copies of the copy instance
 #
-
-apiVersion: apps/v1beta1
-kind: StatefulSet
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ .Release.Name }}-copy
 spec:
-  serviceName: {{ .Release.Name }}-copy
-  replicas: {{ .Values.replicas }}
+  # Replicas will be changed by Horizontal Pod Autoscaler, HPA
+  replicas: 1 
+  selector:
+    matchLabels:
+#     # has to match .spec.template.metadata.labels
+      app: {{ .Release.Name }}-copy
+#      
+# Update strategy
+  minReadySeconds: {{ .Values.update.minReadySeconds }}
+  strategy:
+    rollingUpdate:
+      maxSurge: {{ .Values.update.maxSurge }}
+      maxUnavailable: {{ .Values.update.maxUnavailable }}
+    type: RollingUpdate
+#
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}-copy
     spec:
-        volumes:
-         - name: shm
-           emptyDir:
-             medium: Memory
-         - name: secrets
-           secret:
-               secretName: {{ .Release.Name }}-agraphsecrets
-        containers:
-        - name: {{ .Release.Name }}-controlling
-          image: {{ .Values.image.repository }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          livenessProbe:
-            httpGet:
-              path: /version
-              port: {{ .Values.port }}
-            initialDelaySeconds: 30
-          volumeMounts:
-          - name: shm
-            mountPath: /dev/shm
-          - name: secrets
-            mountPath: /app/secrets
-            readOnly: true
-          env:
-          - name: ControllingHost
-            value: "{{ .Release.Name }}-controlling"
+      volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+        - name: secrets
+          secret:
+            secretName: {{ .Release.Name }}-agraphsecrets
+      containers:
+      - name: {{ .Release.Name }}-controlling
+        image: {{ .Values.image.repository }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        # CPU limits for the Horizontal Pod Autoscaler, HPA
+        resources:
+          limits:
+            cpu: {{ .Values.cpu.limit}}
+          requests:
+            cpu: {{ .Values.cpu.request}}
+        # Pod still available ?
+        livenessProbe:
+          httpGet:
+            path: /version
+            port: {{ .Values.port }}
+          initialDelaySeconds: 30
+        # Mount need application volumes
+        volumeMounts:
+        - name: shm
+          mountPath: /dev/shm
+        - name: secrets
+          mountPath: /app/secrets
+          readOnly: true
+        env:
+        - name: ControllingHost
+          value: "{{ .Release.Name }}-controlling"
 
 
