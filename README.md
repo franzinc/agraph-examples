@@ -4,8 +4,6 @@ Author:     Robert Wydler </br>
 LinkedIn:   [Profile](https://www.linkedin.com/in/robwyd/) 
 
 ## Introduction 
-
-
 ### Based on ###
  This is an extension of the product "AllegroGraph for Multi-Master Replication" and is based on https://github.com/franzinc/agraph-examples.
 
