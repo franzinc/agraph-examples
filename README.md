@@ -4,11 +4,10 @@ Author:     Robert Wydler </br>
 LinkedIn:   [Profile](https://www.linkedin.com/in/robwyd/) 
 
 ## Introduction 
-###  Intention ###
-My intentions are to have a professional triple/quad store available in Google Cloud for further semantic AI investigations and to offer my changes to the manufacturer (as a thanks for the free edition) as well as to the public.
+
 
 ### Based on ###
- This extension of "AllegroGraph for Multi-Master Replication" is based on https://github.com/franzinc/agraph-examples.
+ This is an extension of the product "AllegroGraph for Multi-Master Replication" and is based on https://github.com/franzinc/agraph-examples.
 
 ### Goals ###
 1. Creating a docker image like [Docker and AllegroGraph 7.0.4](https://franz.com/agraph/support/documentation/current/docker.html) but for [Multi-Master Replication in AllegroGraph 7.0.4](https://franz.com/agraph/support/documentation/current/multi-master.html) based on [Welcome to AllegroGraph examples](https://github.com/franzinc/agraph-examples).
@@ -29,9 +28,21 @@ Currently ...
 * ... it's only a **developer study** version and it's **not ready for production!** 
 * ... the prototype was only running in a **very small (free)** Google GKE **test environment**.
 * ... **fundamental changes** had been made (e.g. from ``StateFull`` copy read only ``pods`` to ``Deployment`` copy read only ``pods``) and Kubernetes' ``Horizontal Pod Autoscaler`` had been defined added (``hpa.yaml``).
+
+## Known issue ##
+After deployment, sometimes it may happen, that the repositories are not reachable by the `agraph-mmr-copy-loadbalancer`. That's because the `agraph-mmr-controlling` stateful set has to run   before the `agraph-mmr-copy` deployment. I haven't figured out yet, how to arrange a sequential start in Helm. 
+
+You can **circumvent** the issue by deleting the `agraph-mmr-copy` pods in the Google Cloud Console or you can perform a graceful pod deletion with the following command:
+
+`kubectl delete pods \<pod>`
+
+The `agraph-mmr-copy` pods will be recreated automatically by the deploment.  
+
 ---
 ## ToDo's for a Reliable Release
-For a reliable releas of the Docker Image 7.0.4 together with Kubernetes and Helm, it's important to validate and test ...
+1. Change Helm to always start the stateful set `agraph-mmr-controlling` before the  `agraph-mmr-copy` deployment.  
+
+For a reliable release of the Docker Image 7.0.4 together with Kubernetes and Helm, it's important to validate and test ...
 1. ... the functionality of `copy-ssl.yaml` pods after the change from `StatefulSet` to Kubernetes `Deployment` pods.
 1. ... the reliability and horizontal scalability of the pods (`hpa.yaml`) and of the Kubernetes cluster (e.g. GKE) in an operational environment with high query loads.
 1. ... the interaction of the state-oriented controller pods with the stateless copy pods.
