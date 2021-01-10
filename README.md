@@ -29,7 +29,7 @@ Currently ...
 * ... the prototype was only running in a **very small (free)** Google GKE **test environment**.
 * ... **fundamental changes** had been made (e.g. from ``StateFull`` copy read only ``pods`` to ``Deployment`` copy read only ``pods``) and Kubernetes' ``Horizontal Pod Autoscaler`` had been defined added (``hpa.yaml``).
 
-## Known issue ##
+## Known Issue ##
 After deployment, sometimes it may happen, that the repositories are not reachable by the `agraph-mmr-copy-loadbalancer`. That's because the `agraph-mmr-controlling` stateful set has to run   before the `agraph-mmr-copy` deployment. I haven't figured out yet, how to arrange a sequential start in Helm. 
 
 You can **circumvent** the issue by deleting the `agraph-mmr-copy` pods in the Google Cloud Console or you can perform a graceful pod deletion with the following command:
