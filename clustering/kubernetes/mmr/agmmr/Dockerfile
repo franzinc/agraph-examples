@@ -8,17 +8,16 @@ FROM centos:7
 # ensure we have a good set of network programs installed
 RUN yum -y install net-tools iputils bind-utils wget hostname openssl
 
-ARG agversion=7.0.0
-ARG testrelease=
+ARG agversion=7.0.4  
 
 ENV agdistfile=agraph-${agversion}-linuxamd64.64.tar.gz
 ENV agversion=${agversion}
 
 ## Show the curl command we're about to execute
 ## This useful for debugging curl problems due to invalid arguments
-RUN echo will do: curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${agversion}${testrelease}/linuxamd64.64/${agdistfile}
+RUN echo will do: curl -f -o ${agdistfile} https://franz.com/ftp/pri/acl/ag/ag${agversion}/linuxamd64.64/${agdistfile}
 
-RUN curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${agversion}${testrelease}/linuxamd64.64/${agdistfile}
+RUN curl -f -o ${agdistfile} https://franz.com/ftp/pri/acl/ag/ag${agversion}/linuxamd64.64/${agdistfile}
 
 ## extract the AllegroGraph distribution
 RUN tar xfz ${agdistfile}
@@ -40,5 +39,5 @@ COPY . /app/misc
 # in the controlling instance only.
 VOLUME ["/app/rootcatalog"]
 
-
+RUN chmod +x /app/misc/runrepl.sh
 ENTRYPOINT ["/app/misc/runrepl.sh"]

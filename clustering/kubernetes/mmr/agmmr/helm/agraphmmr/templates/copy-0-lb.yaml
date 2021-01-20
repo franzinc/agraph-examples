@@ -1,0 +1,25 @@
+#
+# This will create a service with an external IP address through which
+# one can access the the copy-0  instance.
+# Since there's just one copy-0 instance we don't need to worry
+# about the fact that the load balancer has no support for sessions.
+#
+# The external IP will be chosen by the cloud provider
+#
+# This is just an example of how one specifies a particular instance
+# of a StatefulSet.   We won't normally use this load balancer
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-copy-0-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: {{ .Values.port }}
+    targetPort: {{ .Values.port }}
+  selector:
+    app: {{ .Release.Name }}-copy
+    statefulset.kubernetes.io/pod-name: {{ .Release.Name }}-copy-0
+    
+
