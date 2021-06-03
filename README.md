@@ -14,4 +14,6 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 
 * Generate AllegroGraph databases
   * [Weather data](generators/weather/weather.md)
-  
+
+* Virtual knowledge graphs
+  * [Ontop](ontop/README.md)

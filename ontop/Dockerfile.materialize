@@ -1,0 +1,23 @@
+FROM openjdk:8-slim-buster
+LABEL maintainer="Tianyu Gu <gty@franz.com>"
+
+RUN apt-get update -yq && apt-get upgrade -yq
+RUN apt-get install -yq curl zip unzip
+
+WORKDIR /opt
+ARG ONTOP_VERSION=4.1.0
+RUN curl -L https://github.com/ontop/ontop/releases/download/ontop-${ONTOP_VERSION}/ontop-cli-${ONTOP_VERSION}.zip > /tmp/ontop-cli.zip
+RUN unzip /tmp/ontop-cli.zip
+RUN curl -L https://jdbc.postgresql.org/download/postgresql-42.2.20.jar > jdbc/postgresql-42.2.20.jar
+RUN mkdir -p /var/ontop
+ADD bin/demo.properties /var
+ADD bin/demo.mini-mapping.obda /var
+
+# materialize
+ENV ONTOP_JAVA_ARGS="-Xms512m -Xmx1g"
+CMD /opt/ontop materialize \
+    --properties /var/demo.properties \
+    --mapping /var/demo.mini-mapping.obda \
+    --disable-reasoning \
+    --format ntriples \
+    --output /var/ontop/demo.materialized.nt

@@ -1,0 +1,20 @@
+[PrefixDeclaration]
+r:          http://franz.com/ontop-demo/
+p:          http://franz.com/ontop-demo/Property#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+owl:		http://www.w3.org/2002/07/owl#
+xsd:		http://www.w3.org/2001/XMLSchema#
+obda:		https://w3id.org/obda/vocabulary#
+
+[MappingDeclaration] @collection [[
+
+mappingId	MAPPING-Seats
+target		r:Seat_{aircraft_code}_{seat_no} a r:Seat ; p:aircraft_code {aircraft_code}^^xsd:string ; p:seat_no {seat_no}^^xsd:string ; p:seat_fare_conditions {fare_conditions}^^xsd:string .
+source		SELECT * FROM "seats"
+
+mappingId	MAPPING-Aircraft
+target		_:ontop-bnode-1{aircraft_code}/{model}/{range} a r:Aircraft ; p:aircraft_code {aircraft_code}^^xsd:string ; p:aircraft_model {model}^^xsd:string ; p:aircraft_range {range}^^xsd:integer .
+source		SELECT * FROM "aircrafts"
+
+]]
