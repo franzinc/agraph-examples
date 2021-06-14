@@ -92,7 +92,7 @@ docker build -t demo_bootstrap -f Dockerfile.bootstrap $(pwd)
 Then we run the container by:
 
 ```
-docker run --rm --mount "type=bind,src=$(pwd)/ontop_output,dst=/var/ontop" --network host demo_bootstrap`
+docker run --rm --mount "type=bind,src=$(pwd)/ontop_output,dst=/var/ontop" --network host demo_bootstrap
 ```
 
 Now you should see two new files in ontop_output folder:
