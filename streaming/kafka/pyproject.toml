@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "streaming"
+version = "0.1"
+description = "A basic package demostrating how to integrate Kafka with AllegroGraph."
+authors = ["Tianyu Gu <gty@franz.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+bidict = "^0.21.2"
+confluent-kafka = "^1.7.0"
+tqdm = "^4.61.0"
+agraph-python = "^101.0.7"
+six = "^1.16.0"
+essential-generators = "1.0"
+rdflib = "^5.0.0"
+importlib-resources = "^5.1.4"
+
+[tool.poetry.dev-dependencies]
+ipython = "^7.19.0"
+black = "^21.4b2"
+
+[tool.poetry.scripts]
+streaming = 'streaming.cli:main'
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py37', 'py38', 'py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+'''

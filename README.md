@@ -15,5 +15,8 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 * Generate AllegroGraph databases
   * [Weather data](generators/weather/weather.md)
 
+* Streaming
+  * [Construct a Graph Streaming Pipeline by Using Kafka and AllegroGraph](streaming/kafka/README.md)
+
 * Virtual knowledge graphs
   * [Ontop](ontop/README.md)
