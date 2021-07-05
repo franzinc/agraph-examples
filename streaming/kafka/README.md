@@ -2,13 +2,11 @@
 
 ## 1. Introduction
 
-Nowadays, enterprises are starting to adopt a streaming pipeline to provide insights that adapt to new data, often in **real-time**. This goes beyond traditional approaches that operate on data **batches**. Compared to batch processing, the advantage of streaming is obvious. For example, in the manufacturing area, analyzing data from various sensors in real-time allows a manufacturer to spot problems and correct them before a product leaves the production line. This improves the efficiency of operations — and saves money. When "real-time experience" is important (or mandatory), a flexible, scalable and robust streaming platform is always more suitable.
+Nowadays, enterprises are starting to adopt streaming pipelines to provide insights that adapt to new data in **real-time**. This goes beyond traditional approaches that operate on data **batches**. Compared to batch processing, the advantage of streaming is obvious. For example, in the manufacturing area, analyzing data from various sensors in real-time allows a manufacturer to spot problems and correct them before a product leaves the production line. This improves the efficiency of operations — and saves money. When "real-time experience" is important (or mandatory), a flexible, scalable and robust streaming platform is always more suitable.
 
-What role would AllegroGraph act in such a streaming pipeline? As a triple-store, there are many advantages of integrating AllegroGraph in a streaming architecture:
+AllegroGraph is used very often as an Entity Event Knowledge Graph platform. Our customers use the entity-event approach in diverse settings like a call center, a hospital, in insurance, in aviation and even in finance. AllegroGraph as an entity-event knowledge graph will accept incoming events, do instant queries and analytics on the new data and then store events and results. AllegroGraph is geared to high speed inserts so in general can keep up with high business loads but for several reasons it is advantageous to couple AllegroGraph with Apache Kafka. Apache Kafka is an open-source distributed event streaming platform used by thousands of companies for high-performance data pipelines, streaming analytics, data integration, and mission-critical applications.
 
-* Highly flexible and fully distributed graph data model
-* Semantic reasoning
-* Rich analytics tools, including [N-dimensional Geospatial](https://franz.com/agraph/support/documentation/current/geospatial-nd.html), [SNA](https://franz.com/agraph/support/documentation/current/magic-properties.html#sparql-magic-sna) and Machine Learning
+![Apache Kafka](img/apache_kafka.png)
 
 In this tutorial, we will show an end-to-end example of constructing a graph streaming pipeline by using [Apache Kafka](https://kafka.apache.org/) and AllegroGraph.
 
@@ -17,7 +15,7 @@ In this tutorial, we will show an end-to-end example of constructing a graph str
 We have packaged all the resources and source code for this tutorial. To start, you need to have these two tools installed:
 
 1. a Docker Engine, e.g. [https://docs.docker.com/engine/install/](https://docs.docker.com/engine/install/), and [https://podman.io/](https://podman.io/)
-2. [Docker Compose](https://docs.docker.com/compose/), or [podmna-compose](https://github.com/containers/podman-compose) if you are using [Podman](https://podman.io/)
+2. [Docker Compose](https://docs.docker.com/compose/), or [podman-compose](https://github.com/containers/podman-compose) if you are using [Podman](https://podman.io/)
 
 ### 2.1 Start the Kafka Cluster
 
@@ -30,7 +28,7 @@ Before we proceed, there are a few basic terms of Kafka that you need to know:
 3. Producer - the one who produces data to a topic
 4. Consumer - the one who consumes data from a topic
 
-Now, issue `make kafka` to start a single-node Kafka cluster, or issue `make kafka DOCKER_COMPOSE=podman-compose` if you are using `podman-compose`. Additionally, there is also a Kafka Web UI (powered by [kafdrop](https://github.com/obsidiandynamics/kafdrop)) running at port `9000` on your host. If the cluster has successfully started, you should see this page by visiting [http://localhost:9000](http://localhost:9000); as the page says, there's only one Kafka broker running at port `9092`:
+Now, issue the command `make kafka` to start a single-node Kafka cluster, or issue `make kafka DOCKER_COMPOSE=podman-compose` if you are using `podman-compose`. Additionally, there is also a Kafka Web UI (powered by [kafdrop](https://github.com/obsidiandynamics/kafdrop)) running at port `9000` on your host. If the cluster has successfully started, you should see this page by visiting [http://localhost:9000](http://localhost:9000); as the page says, there's only one Kafka broker running at port `9092`:
 
 ![kafdrop - Kafka Web UI](img/kafka_web_ui.png)
 
@@ -76,7 +74,7 @@ Put everything together, we have prepared a diagram for illustrating our graph s
 
 ### 4.1 AllegroGraph
 
-Issue `make ag` to start an AllegroGraph instance at port `10055`, with username `test` and password `xyzzy`. It will create a repository named `kafka-basic` and load some initialization triples into it so that other services can start from there.
+Issue the command `make ag` to start an AllegroGraph instance at port `10055`, with username `test` and password `xyzzy`. It will create a repository named `kafka-basic` and load some initialization triples into it so that other services can start from there.
 
 ```
 $ make ag
@@ -91,7 +89,7 @@ If the command runs successfully, the repository will be ready at [http://localh
 
 ### 4.2 Posts Producer
 
-Issue `make producer` to start producing posts to the Kafka topic `posts`. It is a program that will keep producing posts every 1 to 3 seconds. By default, after **10,000** posts, the producer will exit. You can increase the number by using the `NUM_POSTS` variable, for example, `make producer NUM_POSTS=20000`.
+Issue the command `make producer` to start producing posts to the Kafka topic `posts`. It is a program that will keep producing posts every 1 to 3 seconds. By default, after **10,000** posts, the producer will exit. You can increase the number by using the `NUM_POSTS` variable, for example, `make producer NUM_POSTS=20000`.
 
 If you are interested, you can view the logs of our producer by `docker logs -f ag-kafka-basic_producer`:
 
