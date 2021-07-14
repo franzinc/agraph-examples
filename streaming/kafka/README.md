@@ -28,6 +28,7 @@ Before we proceed, there are a few basic terms of Kafka that you need to know:
 3. Producer - the one who produces data to a topic
 4. Consumer - the one who consumes data from a topic
 
+Firstly, please clone our [repository](https://github.com/franzinc/agraph-examples) by `git clone https://github.com/franzinc/agraph-examples.git` and then change the directory to **"streaming/kafka/"**.
 Now, issue the command `make kafka` to start a single-node Kafka cluster, or issue `make kafka DOCKER_COMPOSE=podman-compose` if you are using `podman-compose`. Additionally, there is also a Kafka Web UI (powered by [kafdrop](https://github.com/obsidiandynamics/kafdrop)) running at port `9000` on your host. If the cluster has successfully started, you should see this page by visiting [http://localhost:9000](http://localhost:9000); as the page says, there's only one Kafka broker running at port `9092`:
 
 ![kafdrop - Kafka Web UI](img/kafka_web_ui.png)
