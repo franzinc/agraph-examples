@@ -55,9 +55,8 @@ def main():
         clear=True,
     ) as conn:
         logger.info("AllegroGraph repo '%s' connected" % repo)
-        with importlib_resources.path(module_data, "data.nt.bz2").open("rb") as fd:
-            data = bz2.decompress(fd.read()).decode("utf-8")
-            conn.addData(data, rdf_format=RDFFormat.NTRIPLES)
+        data = bz2.decompress(importlib_resources.read_binary(module_data, "data.nt.bz2")).decode("utf-8")
+        conn.addData(data, rdf_format=RDFFormat.NTRIPLES)
         logger.info("Triples added to the repo")
 
         flag = conn.prepareUpdate(query=SNA_RQ).evaluate()
