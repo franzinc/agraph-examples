@@ -4,6 +4,9 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 
 ## Featured examples
 
+* Apache Spark
+  * [Graph Analytics by AllegroGraph and Apache Spark](spark/AGSpark.ipynb)
+
 * Configuration and setup examples
   * [Clustering](clustering)
     * [Load balancing multi-master replication cluster on AWS using Terraform](clustering/terraform-elb/using-terraform.md)
