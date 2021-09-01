@@ -19,7 +19,7 @@ demo:
 	@echo "Importing jupyter notebook data ..."
 	@docker cp AGSpark.ipynb $(JUPYTER_CONTAINER_NAME):/root/work
 	@docker exec $(JUPYTER_CONTAINER_NAME) sh -c "mkdir -p /root/work/img"
-	@docker cp .docker/kennedy.png $(JUPYTER_CONTAINER_NAME):/root/work/img
+	@docker cp img/kennedy.png $(JUPYTER_CONTAINER_NAME):/root/work/img
 
 .PHONY: stop
 stop:
