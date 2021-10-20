@@ -1,4 +1,4 @@
-# Tutorial -- Knowledge Graph Virtualization by Ontop
+# Creating Virtual and Materialized Graphs in AllegroGraph
 
 ## 1. Introduction
 
