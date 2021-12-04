@@ -26,3 +26,7 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 
 * Virtual knowledge graphs
   * [Creating Virtual and Materialized Graphs in AllegroGraph](ontop/README.md)
+
+* Gruff
+  * [Embedding Gruff In a Web Page](gruff/readme.md)
+

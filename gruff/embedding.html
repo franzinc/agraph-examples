@@ -1,0 +1,622 @@
+<!-- -*- mode: js; js-indent-level: 2; indent-tabs-mode: nil; -*- -->
+<!DOCTYPE html><html lang="en"><head>
+<title>Remotely Launching an Embedded Gruff and Sending It Commands</title>
+<meta charset="utf-8"/>
+<style>
+body {
+  background: #FFFCF4;
+  margin-left: 1%; margin-right: 2%; margin-top: 20px;
+  font-family: sans-serif; font-size: 14pt;
+}
+table, tr, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 6px 16px;
+  border-color: #4488ff
+}
+</style>
+</head>
+<script>
+
+// This file demonstrates how a web page can launch and embed a
+// private copy of Gruff that's running on a remote server, and then
+// use Gruff's HTTP interface to control Gruff programmatically from
+// JavaScript in a web application.  For details on Gruff's HTTP
+// interface, see the section "The HTTP Interface to Gruff" toward the
+// bottom of the single Gruff document.
+
+// A Gruff feature allows a single "launcher" instance of Gruff to be
+// running as a server and listening for requests from web browsers.
+// It will launch a separate instance of Gruff for each web page that
+// requests one, up to a specified limit.  (It can optionally use the
+// launcher instance itself for one client, to minimize the number of
+// Gruff executables that are running.)
+
+// Web site creators could simply read this code to learn how to embed
+// Gruff in a web page, and optionally also pass Gruff's HTTP commands
+// in JavaScript, or they could run this demo after first setting a
+// few things up.  See the instructions that appear on this HTML page
+// when you display it in a web browser (or the bottom of this file)
+// for setup instructions.
+
+// The "Run Gruff Below" button in this example demonstrates how to
+// simply embed Gruff in a web page.  It first sends an HTTP request
+// to the machine where a server Gruff is running at the known port
+// 9009 to request a copy of Gruff.  The reply to that message from
+// Gruff will be a port on the same machine for a private instance of
+// Gruff that the server Gruff started up for this client.  The
+// button's script will then tell the iframe element to visit the
+// machine at that port to display its own instance of Gruff.
+
+// Some of the finer points in this code are not necessary, such as
+// making it work to directly restart Gruff when the maximum number of
+// clients are currently already running, but such things are included
+// in case you want to use them.
+
+// You will need to modify this line if Gruff is not running on the
+// same machine as the AllegroGraph server.
+let agServerMachine = "localhost";
+
+// You will need to modify this line if the AllegroGraph server is
+// not running on default port 10035.
+let agServerPort = 9090; // jjj 10035;
+
+// You will need to modify this line if the name of the triple-store
+// that's needed for this demo is not actors-extended.
+let repoName = "actors720extended"; // jjj "actors-extended";
+
+// These two variables are where Gruff is running in launcher mode.
+// These default values can be used when using this demo file as the
+// --file-to-publish command line argument, but if this code were in a
+// real web page then it may need to to hard-code the actual machine
+// and port where the Gruff launcher is known to be running.
+let launcherMachine = location.hostname;
+let launcherPort = location.port;
+
+// A password can be required with a command line argument
+// like "--remote-password secret".  Otherwise this can be null.
+// let password = "secret";
+let password = null;
+
+// The above is all that you might need to change to run this demo.
+// The rest is functionality that can be adapted for a real web page
+// or web application.
+
+// The ID of the iframe where Gruff will be embedded.
+let gruffFrameName = "gruffFrame";
+// Use null to instead show Gruff in a new browser tab.
+// let gruffFrameName = null;
+
+// A bit of a hack for a github examples page.
+let disabled = true;
+
+// These will get set during the run.
+let ourPort, gruffFrame, dropper, messageWidget;
+
+// The list of commands that will appear in the drop-down widget.
+// Each command is (1) a title that you will see, (2) the command
+// name, and (3) the arguments as a JavaScript object.  These commands
+// will get sent to Gruff using Gruff's HTTP interface.
+let commands = [
+  ["Select an Example Command to Send to Gruff"],
+  ["open the actors-extended triple-store",
+   "open-store",
+   { "store-name": repoName,
+     host: agServerMachine,
+     port: agServerPort,
+     "write-mode": "read-write",
+     user: "test",
+     password: "xyzzy" }],
+  ["ask for the triple-store's name",
+   "store-info",
+   { attribute: "store-name" }],
+  ["run the simplest SPARQL query",
+   "query",
+   { language: "sparql",
+     layout: "no",
+     "keep-old-nodes": "no",
+     "query-string":
+     "select ?a ?b ?c where {\n" +
+     "  ?a ?b ?c\n" +
+     "}\n" +
+     "limit 12" }],
+  ["do a SPARQL query with UNIONs, and show its visual graph",
+   "query",
+   { language: "sparql",
+     layout: "yes",
+     "query-string":
+     "select ?a ?b ?c ?d ?e ?f ?g ?h ?i where {\n" +
+     "  { ?a ?b ?c } union { ?d ?e ?f } union { ?g ?h ?i }\n" +
+     "}\n" +
+     "limit 24" }],
+  ["use a custom title bar string",
+   "use-custom-title-bar-string",
+   { string: "Links between Marlo and Gary" }],
+  ["do a SPARQL query that finds a path between two actors",
+   "query",
+   { language: "sparql",
+     layout: "yes",
+     "keep-old-nodes": "no",
+     "query-string":
+     "select ?a ?b ?c ?x where {\n" + 
+     "  ?a ?x <http://dbpedia.org/resource/Marlo_Thomas> .\n" +
+     "  ?a ?x ?b . ?c ?x ?b . ?c ?x\n" +
+     "  <http://dbpedia.org/resource/Gary_Burghoff> .\n" +
+     "}\n" +
+     "limit 12" }],
+  ["clear the custom title bar string",
+   "use-custom-title-bar-string",
+   { string: ""}],
+  ["select Marlo Thomas, to serve as the root of a tree",
+   "select-node",
+   { node: "http://dbpedia.org/resource/Marlo_Thomas" }],
+  ["do a tree layout of the currently displayed nodes",
+   "tree-layout"],
+  ["and back to the standard layout",
+   "update-layout",
+   { redo: "yes" }],
+  ["select two current predicates, for the next step",
+   "current-predicates",
+   { predicates: "<http://dbpedia.org/ontology/director> "
+     + "<http://dbpedia.org/ontology/starring>" }],
+  ["display nodes that are linked by the current predicates",
+   "display-linked-nodes",
+   { "levels-to-add": 1,
+     "keep-old-nodes": "yes",
+     "allow-dialogs": "yes" }],
+  ["find and display paths between two nodes",
+   "find-paths",
+   { node1: "http://dbpedia.org/resource/Jack_Black", 
+     node2: "http://dbpedia.org/resource/Alan_Alda",
+     predicates: "<http://dbpedia.org/ontology/starring>"
+     + "<http://dbpedia.org/ontology/director>"
+     + "<http://www.w3.org/2000/01/rdf-schema#comment>", 
+     "max-path-length": 6,
+     "find-only-shortest-paths": "yes",
+     "keep-old-nodes": "no" }],
+  ["display an arbitrary set of triples",
+   "lay-out-triples",
+   { ntriples:
+     "<http://dbpedia.org/resource/Monty_Python_and_the_Holy_Grail> "
+     + "<http://dbpedia.org/ontology/starring> "
+     + "<http://dbpedia.org/resource/Terry_Jones> ."
+     + String.fromCharCode(10)   // a newline between triples
+     + "<http://dbpedia.org/resource/Monty_Python's_The_Meaning_of_Life> "
+     + "<http://dbpedia.org/ontology/starring> "
+     + "<http://dbpedia.org/resource/Terry_Jones> ."
+     + String.fromCharCode(10)
+     + "<http://dbpedia.org/resource/Monty_Python_and_the_Holy_Grail> "
+     + "<http://dbpedia.org/ontology/starring> "
+     + "<http://dbpedia.org/resource/John_Cleese> ."
+     + String.fromCharCode(10)
+     + "<http://dbpedia.org/resource/Monty_Python's_The_Meaning_of_Life> "
+     + "<http://dbpedia.org/ontology/starring> "
+     + "<http://dbpedia.org/resource/John_Cleese> ." }],
+  ["display a node in the table view",
+   "display-node-in-table",
+   { node: "http://dbpedia.org/resource/Natalie_Wood" }],
+  ["this undefined command should error",
+   "blah-blah-blah"]
+];
+// The onload function that is called when this file gets loaded.
+function demoOnLoad () {
+
+  // The iframe in which to display Gruff.
+  gruffFrame = document.getElementById(gruffFrameName);
+  // The drop-down widget of commands to send to Gruff.
+  dropper = document.getElementById("dropper");
+  // The HTML element where this demo displays status messages.
+  messageWidget = document.getElementById("messageWidget");
+
+  // When reloading the web page, this avoids automatically reloading
+  // the iframe as well, which would leave ourPort undefined (for
+  // example), and restarting the Gruff at that time is probably not
+  // desirable anyway.  After a reload, the user can run Gruff again
+  // if desired.
+  gruffFrame.src = "about:blank";
+
+  // Give Gruff the keyboard focus at startup time so that its
+  // keyboard shortcuts will work without the user first clicking on
+  // its title bar.
+  gruffFrame.focus();
+
+  // Load the sample commands into the drop-down widget.
+  let commandIndex = 0;
+  commands.forEach(function (command) {
+    let item = document.createElement("option");
+    item.innerText = command[0];
+    item.value = commandIndex;
+    commandIndex++;
+    dropper.appendChild(item);
+  });
+  // This would prompt the user when they try to close the web browser
+  // tab or reload the web page, asking if they really want to exit.
+  // That can be useful to avoid losing unsaved changes in Gruff.
+  // window.onbeforeunload = function (event) {
+  //   event.preventDefault();   // the official way
+  //   return "Really exit?";    // the traditonal way
+  // }
+}
+// Code for the "Run Gruff Below" button.  This sends an HTTP request
+// to the Gruff launcher, asking for a personal instance of Gruff (or
+// to use the launcher instance itself if available).  When the reply
+// is received asynchronously, displayGruff will be called.
+function runGruff () {
+  if (disabled) {
+    statusMessage("Running Gruff is disabled in this context.");
+    return;
+  }
+  dropper.selectedIndex = 0;
+  // If Gruff is already running, then first tell it to exit and
+  // wait for that to complete, and then run the app again.  This is a
+  // fine point that makes it work even when the maximum number of
+  // clients are currently running.  If that's not important, just use
+  // runGruffNow directly.
+  if (ourPort) exitGruff(true); // true means to run after exiting
+  else runGruffNow();
+}
+function runGruffNow (restarting) {
+  let args = {};
+  if (password) args.password = password;
+  if (restarting) args.restarting = true;
+  if (launcherMachine && launcherPort) {
+    statusMessage("Launching a copy of Gruff app at "
+                  + launcherMachine + ":" + launcherPort + " ...");
+    // Ask the launcher that's always running at a known port to
+    // launch a copy of itself for us to use at another port.  When
+    // the reply is received asynchronously, displayGruff will be
+    // called.  This general sendHttpRequest utility function is down
+    // below.
+    sendHttpRequest(launcherMachine, launcherPort, "launch", args,
+                    displayGruff);
+  }
+  // This will happen if someone just displays this HTML file in a web
+  // browser and presses the Run Gruff Below button.  They would
+  // instead need to visit the URL that gets published for the demo.
+  else statusMessage("There is no known Gruff server machine and " +
+                     "port.  You first need to display this page by " +
+                     "visiting a URL like machine:9009/embedding " +
+                     "that is made available when running Gruff in " +
+                     "server mode.");
+}
+// This function is called when a reply is received for the launch
+// message above that requests an instance of Gruff.  The reply
+// contains the port for our private Gruff instance.
+function displayGruff (status, response) {
+  // Handle various failure cases for the launch request, and
+  // otherwise display Gruf.
+  if (status === 0)
+    statusMessage("There is no Gruff running at "
+                  + launcherMachine + ":" + launcherPort + ".");
+  else if (status === 200) { // HTTP success
+    if (response === "0") // Gruff's code for refusing a client
+      statusMessage("The Gruff server would not launch an instance, "
+                    + "probably because the maximum number of "
+                    + "clients are now running.");
+    else if (response === "-1") // Gruff's code for a bad password
+      statusMessage("Bad password.");
+    else {
+      // In the normal case, tell the iframe to connect to the server
+      // machine at our personal port, to display Gruff there.
+      ourPort = response; // cache our private port
+      let url = "http://" + launcherMachine + ":" + ourPort;
+      if (gruffFrame) gruffFrame.src = url;
+      // If no gruffFrame was specified, then use a new browser tab.
+      else open(url, "_blank");
+      statusMessage("Success!  Our copy of Gruff "
+                    + "is starting up at port " + ourPort + ".");
+    }
+  }
+  // Possible other failures.
+  else statusMessage("Launching Gruff failed with status "
+                     + status + ".");
+}
+// The function that's called when you select a command in the
+// drop-down widget.
+function runCommandFromDropper () {
+  if (!ourPort) {
+    statusMessage("First run Gruff before sending it commands.");
+    return;
+  }
+  let command = commands[dropper.value];
+  if (command) { // not the "Select an Example" choice at the top
+    statusMessage("Sending the " + command[1] + " command ...")
+    sendHttpRequest(launcherMachine, ourPort, command[1], command[2],
+                    afterCommand, command[1]);
+  }
+}
+// This gets called when the reply to a command comes in.
+function afterCommand (status, response, commandName) {
+  if (status === 0) {
+    statusMessage(
+      "ERROR:  Could not connect to a Gruff HTTP server at "
+        + launcherMachine + " and port " + ourPort + " for the "
+        + commandName + " command.");
+  }
+  else if (status === 200)
+    statusMessage(response); // the status from Gruff
+  else statusMessage("The HTTP request failed with status "
+                     + status + ".");
+}
+// Code for the the "Exit Gruff" button.  This function sends an HTTP
+// message to this client's own instance of Gruff, to exit that
+// executable (unless it's the launcher).  This is not necessary
+// because the executable will reliably exit when the browser tab is
+// closed or the web page is reloaded, or the application is exited
+// from within.  But this is how to do it explicitly if desired.
+function exitGruff (runAfterExiting) {
+  if (ourPort) {
+    statusMessage("Exiting Gruff at "
+                  + launcherMachine + ":" + ourPort + "...");
+    // First stop pointing the iframe to Gruff, to clear it.
+    gruffFrame.src = "about:blank";
+    // Then send an exit message to Gruff.
+    let arguments = password && { password: password };
+    sendHttpRequest (launcherMachine, ourPort, "exit", arguments,
+                     afterExiting, runAfterExiting);
+  }
+  else statusMessage("There is no running Gruff to exit.")
+}
+// This is called when the reply is received to the exit request
+// above.  It can then restart Gruff when that was requested.
+function afterExiting (status, response, runAfterExiting) {
+  if (status === 200) {
+    statusMessage("The Gruff at port " + ourPort + " is exiting.");
+  }
+  else statusMessage("Exiting Gruff failed with status "
+                     + status + ".");
+  ourPort = null;
+  // When the "Run Gruff Below" button first exits Gruff, run
+  // Gruff again after Gruff has told us that it is exiting.
+  // First wait a couple of seconds for the previous Gruff to
+  // fully exit, so that we can reuse the same port if the
+  // maximum number of Gruffs are currently running.
+  // (A test on one machine showed that 1 second was not
+  // enough, but 1.25 seconds was.)
+  if (runAfterExiting)
+    setTimeout(runGruffNow, 2000, true);
+}
+// Sending any HTTP message and handling the reply.  This is a general
+// utility function that you could use without modification.  It sends
+// an HTTP request to the CG app and sets up a function to be called
+// when a reply is received.  command is a command name like "launch"
+// that the app published.  arguments is a JavaScript object to send
+// with the request as URL query arguments.  replyFunction will get
+// called when the reply is received, with the status and response
+// of the reply as the first two arguments and replyFunctionArguments
+// as a third argument
+function sendHttpRequest (host, port, command, arguments,
+                          replyFunction, replyFunctionArguments) {
+  let request = new window.XMLHttpRequest();
+  let url = "http://" + host + ":" + port + "/" + command;
+  // Translate the "arguments" object into a URL query string.  For
+  // example, { password: "secret" } would turn into ?password=secret
+  // (or &password=secret for later arguments) in the URL.  Each
+  // argument value will be uri-encoded (percent-encoded) to escape
+  // URL syntax characers.
+  if (arguments) {
+    let first = true;
+    for (let key in arguments) {
+      url = url + (first ? "?" : "&") + key + "=" +
+        encodeURIComponent(arguments[key]);
+      first = false;
+    }
+  }
+  // When the reply to the request is received asynchronously, call
+  // the replyFunction on the status and the response that were
+  // received, plus the arbitrary replyFunctionArguments.
+  request.onreadystatechange = function () {
+    if (request.readyState === XMLHttpRequest.DONE)
+      (replyFunction (request.status, request.response,
+                      replyFunctionArguments));
+  }
+  // Send the request and return immediately.
+  request.open("GET", url);
+  request.send();
+}
+function statusMessage (string) {
+  messageWidget.innerText = string;
+}
+</script>
+<body onload="demoOnLoad()">
+
+<h2>Embedding Gruff In a Web Page</h2>
+
+<p>Gruff can be embedded in any web page to let readers use Gruff on
+your web site.  This file (embedding.html in the Gruff
+installation folder) explains how to set up a running example of this.
+This file also serves as the example web page itself.  You can adapt
+its JavaScript code for use on your own web site.</p>
+
+<p>Gruff needs to be running in a special "launcher" mode on a server
+machine that the web browser can reach.  Then your web page can send a
+message to the Gruff server that tells it to launch another instance
+of Gruff for the reader to use in one area of your page.</p>
+
+<p>Simply embedding Gruff allows the reader to use Gruff by itself as
+usual inside the web page.  A more advanced feature is that your web
+application can also send custom commands to Gruff.  For example, your
+application could derive a set of triples that it wants Gruff to
+display, and then send those triples to Gruff.</p>
+
+<p>Your web page needs to include an HTML iframe where Gruff will be
+placed.  Your page could start up Gruff when it loads, or it could
+have a link or button that does that if the reader so desires.  The
+bottom of this example page has widgets and an iframe that demonstrate
+this.  The &quot;Run Gruff Below&quot; button sends a message to the Gruff
+server that&apos;s running on a known machine and port, telling it to
+launch a personal instance of Gruff.  The reply contains the port
+where that Gruff instance can be reached, and then the button&apos;s code
+tells the iframe to visit the same machine at that port to display
+Gruff.  The drop-down list then sends commands to Gruff at that port
+to control it externally.  See the JavaScript code in this page for
+details.</p>
+
+<p>There are a few steps for setting up this example:</p>
+
+<ul>
+<li>Download the actors-extended triples file from the following web page
+(toward the bottom of the page).  This example sends custom commands to
+Gruff that are based on these particular triples.
+
+<pre><a href="https://franz.com/agraph/gruff/download/"><b>https://franz.com/agraph/gruff/download/</b></a></pre>
+</li>
+
+<li>Create a triple-store called actors-extended in the root
+directory of an AllegroGraph server, and load those
+triples into it.  (If the triple-store has a different name, then
+edit this example file to set the variable repoName to the name
+of the triple-store.)</li>
+
+<li>Run that AllegroGraph server, typically at default port 10035.
+(If the Agraph server is running at a different port, then edit this
+example file to set the variable agServerPort to the port.)</li>
+
+<li>Run Gruff in server mode with a command line similar
+to the following.  Typically you would run the Gruff that&apos;s
+contained in the AllegroGraph server, in the &quot;gruff&quot; subdirectory.
+(If Gruff is not going to be running on the same machine as the Agraph
+server, then first edit this example file to set the variable
+agServerMachine to the name of the machine where the Agraph server
+is running.)
+</li>
+
+<pre><b>./gruff -- -b yes -l no -x no -o 9009-9013 -t 0 -m 5 --launcher yes -g log.txt --file-to-publish embedding.html &</b></pre>
+
+<p>On Windows, use &quot;gruff.exe&quot; rather than &quot;gruff&quot;.</p>
+
+</ul>
+
+<p>Once everything is set up, tell a web browser to visit
+<b>machine:9009/embedding</b>,
+where <b>machine</b> is the name of the machine where the Gruff server is
+running, such as <b>hazel.mycompany.com</b>, or simply <b>hazel</b> within
+a local area network.  If Gruff is running on the same machine as the web
+browser that will display it, then this can be <b>localhost</b>.
+
+<p>That will display this example file in the web browser, using a URL
+that&apos;s created by the <b>--file-to-publish</b> command-line argument.
+(In a real-world case, your web page would take the place of this demo
+page, and you would not need to use the <b>--file-to-publish</b> option.)</p>
+
+<p>After visting this page as <b>machine:9009/embedding</b>, the
+<b>Run Gruff Below</b> button near the bottom of this page
+will embed Gruff into the page.<p>
+
+<p>Here are the meanings of the command line arguments above:</p>
+
+<table>
+
+<tr><td><b>-b yes</b></td>
+
+<td>Runs Gruff in web browser mode rather than desktop mode.</td></tr>
+
+<tr><td><b>-l no</b></td>
+
+<td>Avoids automatically displaying Gruff in a local web browser when
+the server starts up, because users will be connecting from their
+own web browsers.</td></tr>
+
+<tr><td><b>-x no</b></td>
+
+<td>Avoids exiting the Gruff server when a client exits.  This keeps
+the server running as multiple clients connect and disconnect
+(sometimes simultaneously), though it also means that you
+eventually need to use an operating system tool to end the
+Gruff server process.</td></tr>
+
+<tr><td><b>-o 9009-9013</b></td>
+
+<td>Runs the Gruff server at port 9009, and allows clients to run
+on ports 9009 through 9013.
+</td></tr>
+
+<tr><td><b>-t 0</b></td>
+
+<td>Starts up Gruff&apos;s HTTP server and makes it share
+Gruff&apos;s WebSockets port.  This is what listens for commands
+that your web application sends to Gruff, and is not needed if
+you are simply embedding Gruff without sending it commands.</td></tr>
+
+<tr><td><b>-m 5</b></td>
+
+<td>Allows Gruff to serve as many as five clients at once.</td></tr>
+
+<tr><td><b>--launcher yes</b></td>
+
+<td>Runs Gruff as a server that will run an instance of Gruff for
+each web browser client that requests one (up to a limit).</td></tr>
+
+<tr><td><b>-g log.txt</b></td>
+
+<td>Writes a log file at log.txt in the Gruff folder for
+monitoring the usage of the server, such as when different users
+connect and disconnect.</td></tr>
+
+<tr><td><b>--file-to-publish embedding.html</b></td>
+
+<td>Publishes this example file that lives in the Gruff directory,
+so that web browsers can connect to it at the machine where the Gruff
+server is running and at the specified port.  <b>One warning:</b> If
+you exit the Gruff server, modify the file-to-publish, and start the
+Gruff server again (specifying the same file-to-publish), then
+visiting machine:9009/embedding again in your browser will
+likely display the <b>previous</b> version of the file-to-publish,
+even if you do this in a new browser tab.  And it
+will have the previous behavior as well.  This has confused
+the developer to no end.  8-)  You will then need to use your
+browser&apos;s refresh command to force it to load the modified
+file-to-publish so that you can test your most recent changes.
+</td></tr>
+
+</table>
+
+<p>Here are a couple more options that can be used to make
+Gruff look more like a part of your own application.</p>
+
+<table>
+
+<tr><td><b>--custom-title &quot;Our Graph Visualizations&quot;</b></td>
+
+<td>Replaces the usual title bar text that mentions Gruff with your
+custom title.</td></tr>
+
+<tr><td><b>--disable-menus</b></td>
+
+<td>Removes Gruff&apos;s menu bar and disables other interactive
+gestures, to restrict Gruff activity to the commands that your
+application sends.  (This option does not take an argument.)</td></tr>
+
+</table>
+
+<p><br>The rest of this page demonstrates the functionality that
+was described above.  If you&apos;ve done that setup (including
+visiting this page by telling a web browser to visit
+<b>machine:9009/embedding</b>), then the widgets below
+should now work.
+
+<p>Press the <b>Run Gruff Below</b> button to ask the Gruff server to
+run an instance of Gruff for this user.  The JavaScript code in this
+example file will handle the reply from Gruff and display Gruff in the
+invisible iframe that&apos;s below the buttons.  Then select the
+custom commands in the drop-down widget in the order that they are
+listed.</p>
+
+<button type="button" id="runGruff" onclick="runGruff()"
+        style="font-family: sans-serif; font-size: 14pt">
+Run Gruff Below</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="button" id="exitGruff" onclick="exitGruff()"
+        style="font-family: sans-serif; font-size: 14pt">
+Exit Gruff</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<select id="dropper" onchange="runCommandFromDropper()"
+        style="width: 700px;
+               font-family: sans-serif; font-size: 14pt">
+</select><br><br>
+<div id="messageWidget">
+Responses to commands will appear here.</div><br>
+<iframe id="gruffFrame"
+        style="height: 600px; width: 1400px; border: none">
+</iframe>
+</body></html>
