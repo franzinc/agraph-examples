@@ -5,18 +5,17 @@ description = "A basic package demostrating how to integrate Kafka with AllegroG
 authors = ["Tianyu Gu <gty@franz.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.8,<3.13"
 bidict = "^0.21.2"
 confluent-kafka = "^1.7.0"
 tqdm = "^4.61.0"
-agraph-python = "^101.0.7"
-six = "^1.16.0"
+agraph-python = "^104.0.0"
 essential-generators = "1.0"
 rdflib = "^5.0.0"
 importlib-resources = "^5.1.4"
 
 [tool.poetry.dev-dependencies]
-ipython = "^7.19.0"
+ipython = "^7.31.1"
 black = "^21.4b2"
 
 [tool.poetry.scripts]
@@ -28,7 +27,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target-version = ['py37', 'py38', 'py39']
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
 include = '\.pyi?$'
 extend-exclude = '''
 /(
