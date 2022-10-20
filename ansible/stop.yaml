@@ -1,0 +1,9 @@
+# stop agraph on the agservers hosts
+#
+- name: stop agraph
+  hosts: agservers
+  vars_files:
+     - ./vars.yaml
+  tasks:
+    - name: stop agraph
+      ansible.builtin.shell: "{{basedir}}/bin/agraph-control stop"

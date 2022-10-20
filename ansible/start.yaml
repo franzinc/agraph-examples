@@ -1,0 +1,9 @@
+# start agraph on the agservers hosts
+#
+- name: start agraph
+  hosts: agservers
+  vars_files:
+     - ./vars.yaml
+  tasks:
+    - name: start agraph
+      ansible.builtin.shell: "{{basedir}}/bin/agraph-control start"

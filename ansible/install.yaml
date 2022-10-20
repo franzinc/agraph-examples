@@ -1,0 +1,97 @@
+# install agraph on the agservers hosts
+#
+# see vars.yaml for the variables you need to specify
+#
+- name: install agraph
+  hosts: agservers
+  vars_files:
+     - ./vars.yaml
+  tasks:
+    # we will extract tar.gz file containing AllegroGraph into {{tmpdir}}/{{version}}
+    # and install later into {{basedir}}.
+    
+    - name: make sure the temp dir exists
+      ansible.builtin.file:
+         path: "{{tmpdir}}"
+         state: directory
+         
+    - name: clean the tar file extract directory
+      ansible.builtin.file:
+         path: "{{tmpdir}}/{{version}}"
+         state: absent
+
+    # this will create {{tmpdir}}/{{version}} which will contain
+    # the files needed to install AllegroGraph
+    - name: extract new tar file
+      ansible.builtin.unarchive:
+          dest: "{{tmpdir}}"
+          src:   "{{tarfile}}"
+
+    
+    - name: copy in the script to build agraph.cfg
+      ansible.builtin.copy:
+         dest:  "{{tmpdir}}/{{version}}"
+         src: make-agraph.cfg
+         mode: 0755
+         
+    # copy in the agraph.cfg template
+    #
+    - name: copy in template for agraph.cfg
+      ansible.builtin.copy:
+         dest:  "{{tmpdir}}/{{version}}"
+         src:   agraph.cfg-template
+         
+    # it is ok to omit a value for license: in vars.yaml
+    - name: copy in license for later install if given
+      ansible.builtin.copy:
+         dest:  "{{tmpdir}}/{{version}}/license"
+         src: "{{licensefile}}"
+         mode: 0400
+      when: licensefile | default('',true) | trim != ''
+
+   # copy ssl certificate if it sslcertificate: has
+   # a value in vars.yaml.
+   # You only need an ssl certificate specified if you
+   # specify an sslport and if you haven't modified
+   # agraph.cfg-template to specify the location of
+   # the ssl certificate
+    - name: copy ssl certificate
+      ansible.builtin.copy:
+         dest:  "{{tmpdir}}/{{version}}"
+         src: "{{sslcertificate}}"
+         mode: 0400
+      when: sslcertificate | default('',true) | trim != ''
+
+
+    # create an agraph.cfg
+    #  and build the settings/user file for the super user account
+    - name: make agraph.cfg
+      ansible.builtin.shell:
+         chdir: "{{tmpdir}}/{{version}}"
+         cmd: "./make-agraph.cfg  '{{basedir}}' '{{agport}}' '{{sslport}}'  '{{sslcertificate}}' '{{superuser}}' '{{superpassword}}'"
+       
+    # install without superseding into {{basedir}} 
+    - name: install new version
+      ansible.builtin.shell:
+         chdir: "{{tmpdir}}/{{version}}"
+         cmd:   "./install-agraph  {{basedir}} --no-configure --supersede"
+  
+    # If a license file is given in vars.yaml add that license
+    # to agraph.cfg
+    - name: add my license
+      ansible.builtin.shell:
+         chdir: "{{tmpdir}}/{{version}}"
+         cmd:    "cat license >> {{basedir}}/lib/agraph.cfg"
+      when: licensefile | default('',true) | trim != ''
+
+    # install the super user account
+    - name: add super user account
+      ansible.builtin.shell:
+         chdir: "{{tmpdir}}/{{version}}"
+         cmd: "cp -rp settings {{basedir}}"
+         
+    # remove the installation directory as we no longer need it.
+    - name: cleanup installation directory
+      ansible.builtin.file:
+         path: "{{tmpdir}}/{{version}}"
+         state: absent

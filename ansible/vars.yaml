@@ -1,0 +1,48 @@
+# Variables used to install and configure agraph servers on machines
+# listed in the inventory.txt file
+#
+# We extract the tar file containing an agraph server installation
+# into {{tmpdir}}/{{version}}.
+# We then build an agraph.cfg file and superuser password entry
+# 
+# Then we install agraph to the directory {{basedir}}
+#
+
+# The tmpdir will just be used to store the installation files
+# which will be removed after the install.  
+# We remove {{tmpdir}}/{{version}} before and after the install
+tmpdir: /w/tmp
+
+# The agraph server and utility files are installed at  {{basedir}}
+# which is removed before the install.  This will remove all
+# existing repositories in this directory!
+basedir: /w/agraph-7.3.0-test
+
+# The file containing the agraph server installation.
+# This file need only be present on the ansible controlling machine
+tarfile: ~/dists/agraph/ag7.3.0/linuxamd64.64/agraph-7.3.0-linuxamd64.64.tar.gz
+
+# the version must match the tar file.  Since the the tar file is
+# for version 7.3.0 the version string must be exactly this:
+version: agraph-7.3.0
+
+#
+# The agraph license to use
+# This file need only be present on the ansible controlling machine
+# If you don't want to supply a license or have put the license
+# in agraph.cfg-template then don't put any value after licensefile:
+licensefile: ~/license.txt
+
+# set these to the values for the http and https ports
+# you must set at least one of them.
+agport: 10998
+sslport: 12001
+
+# if you've set an sslport then you can specify the location of the ssl certificate
+# file here or put the information in the agraph.cfg-template file
+sslcertificate: server.pem
+
+# you must set the super user name and password here
+superuser: test
+superpassword: xyzzy
+

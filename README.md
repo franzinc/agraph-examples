@@ -12,6 +12,7 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
     * [Load balancing multi-master replication cluster on AWS using Terraform](clustering/terraform-elb/using-terraform.md)
     * [AllegroGraph Replication using NGINX Load Balancer](clustering/misc/using-nginx-load-balancer.md)
     * [MMR Replication Clusters in Kubernetes and Docker Swarm](clustering/kubernetes/mmr/kubernetes-mmr.md)
+  * [Ansible for multi-server installation](ansible)
 * Data examples
   * [Bitcoin RDF model](data/bitcoin)
 

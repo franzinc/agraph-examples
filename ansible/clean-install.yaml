@@ -1,0 +1,11 @@
+# remove the AllegroGraph installation
+#
+- name: remove agraph installation
+  hosts: agservers
+  vars_files:
+     - ./vars.yaml
+  tasks:
+    - name: remove the agraph installation
+      ansible.builtin.file:
+         path: "{{basedir}}"
+         state: absent

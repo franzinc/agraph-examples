@@ -1,0 +1,19 @@
+# AllegroGraph configuration file
+BaseDir %BASEDIR%
+
+## these will be defined at the bottom of this file if needed
+#Port 
+#SSLPort 
+SettingsDirectory settings
+LogDir log
+PidFile data/agraph.pid
+InstanceTimeout 604800
+
+<RootCatalog>
+ Main data/rootcatalog
+</RootCatalog>
+
+<SystemCatalog>
+ Main data/systemcatalog
+ InstanceTimeout 10
+</SystemCatalog>
