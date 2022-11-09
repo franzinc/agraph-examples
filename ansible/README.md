@@ -8,7 +8,10 @@ more machines.
   You must edit three files to personalize the configuration
 and then you can use the Makefile to install, start and stop the
 AllegroGraph servers on one or more machines.
-  
+
+ There is also a Makefile rule called `agraph` for creating the `/etc/rc.d/init.d`
+shell script for starting and stopping the server when the machine
+is started or shutdown.
 
 ## Configuration
  There are a vast number of server configuration parameters
@@ -118,5 +121,21 @@ If you are going to `make install` be sure to stop all servers before doing so.
 
 
   
+## make agraph
+
+The command
+```
+% make agraph
+```
+will create the shell script `agraph` that you copy to `/etc/rc.d/init.d`
+so you can automatically start and stop the agraph server on machine start up and
+shut down.
+
+Run the command as root
+```
+# chkconfig --help
+```
+to see how you can cause the `/etc/rc.d/init.d/agraph` script to run
+at certain run levels.
 
 

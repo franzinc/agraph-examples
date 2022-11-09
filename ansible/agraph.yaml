@@ -1,0 +1,13 @@
+#  make init.d agraph shell script
+#
+- name: make init.d agraph shell script
+  hosts:
+    - localhost
+  vars_files:
+     - ./vars.yaml
+  tasks:
+    - name: stop agraph
+      ansible.builtin.shell:
+         cmd: "sed -e s,%BASEDIR%,{{basedir}}, agraph.init > agraph; chmod 755 agraph"
+         chdir: "."
+         warn: false

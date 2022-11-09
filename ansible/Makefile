@@ -39,5 +39,9 @@ install:
 clean-install:
 	ansible-playbook -v -i inventory.txt clean-install.yaml
 
+# create the agraph shell script that is then stored in /etc/init.d
+agraph: agraph.init vars.yaml
+	ansible-playbook -v agraph.yaml
+
 
 

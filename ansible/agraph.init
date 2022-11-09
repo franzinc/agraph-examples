@@ -1,0 +1,117 @@
+#!/bin/bash
+#
+# agraph	This shell script takes care of starting and stopping
+#		AllegroGraph (agraph)
+#
+# chkconfig: - 90 10
+# description: AllegroGraph database server.
+# processname: agraph
+
+if [ -f /etc/rc.d/init.d/functions ]
+then
+	# Red Hat (alike) system
+
+	# Source function library.
+	. /etc/rc.d/init.d/functions
+
+	# Source networking configuration.
+	. /etc/sysconfig/network
+else
+	action () {
+		local message rc
+		message=$1
+		echo -n "$message"
+		shift
+		if $*
+		then
+			echo " succeeded"
+		else
+			echo " failed"
+		fi
+	}
+fi
+
+basedir=%BASEDIR%
+
+CONFIGFILE=$basedir/lib/agraph.cfg
+agraph_control=$basedir/bin/agraph-control
+
+if [ -f /etc/sysconfig/agraph ]; then
+    . /etc/sysconfig/agraph
+fi
+
+if [ ! -f $CONFIGFILE ]; then
+    cat <<EOF
+No AllegroGraph config file found at $CONFIGFILE
+
+Please run the AllegroGraph configuration script (/usr/bin/configure-agraph)
+or adjust the CONFIGFILE setting /etc/sysconfig/agraph
+EOF
+
+    exit 1
+fi
+
+prog="AllegroGraph"
+
+function start {
+    if $agraph_control --config $CONFIGFILE start; then
+	action $"Starting $prog: " /bin/true
+	test -d /var/lock/subsys && touch /var/lock/subsys/agraph
+	return 0
+    else
+        action $"Starting $prog: " /bin/false
+	return 1
+    fi
+}
+
+function stop {
+    if $agraph_control --config $CONFIGFILE stop; then
+	action $"Stopping $prog: " /bin/true
+        test -d /var/lock/subsys && rm -f /var/lock/subsys/agraph
+	return 0
+    elif [ $? = 144 ] && $agraph_control --config $CONFIGFILE force-stop ; then
+        action $"Stopping $prog: " /bin/true
+        test -d /var/lock/subsys && rm -f /var/lock/subsys/agraph
+        return 0
+    else
+        action $"Stopping $prog: " /bin/false
+        return 1
+    fi
+}
+
+function reload {
+    action $"Reloading $prog: " $agraph_control --config $CONFIGFILE reload
+}    
+ 
+function condrestart {
+    [ -e /var/lock/subsys/agraph ] && restart || :
+}
+
+# See how we were called.
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    # FIXME: May want to change this because it lists a zillion pids
+    status agraph
+    ;;
+  reload)
+    reload
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  condrestart)
+    condrestart
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|reload|condrestart|restart}"
+    exit 1
+esac
+
+exit $?
