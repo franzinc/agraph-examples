@@ -32,4 +32,4 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
   * [Embedding Gruff In a Web Page](gruff/readme.md)
 
 * GeoSPARQL
-  * [GeoSPARQL Tutorial](geosparql/GeoSPARQL Tutorial.ipynb)
+  * [GeoSPARQL Tutorial](geosparql/geosparql-tutorial.ipynb)
