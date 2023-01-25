@@ -1,0 +1,25 @@
+@prefix : <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+:Franz geo:hasGeometry :FranzGeom .
+:FranzGeom geo:asWKT "POINT(-122.12956214302625 37.88963389303175)"^^geo:wktLiteral .
+
+:OyamaSushi a :Restaurant ;
+            geo:hasGeometry :OyamaSushiGeom .
+:OyamaSushiGeom geo:asWKT "POINT(-122.1275488659957 37.89076272510303)"^^geo:wktLiteral .
+
+:PostinoRestaurant a :Restaurant ;
+            geo:hasGeometry :PostinoRestaurantGeom .
+:PostinoRestaurantGeom geo:asWKT "POINT(-122.12107937769098 37.891406215514536)"^^geo:wktLiteral .
+
+:TheCooperageAmericanGrille a :Restaurant ;
+            geo:hasGeometry :TheCooperageAmericanGrilleGeom .
+:TheCooperageAmericanGrilleGeom geo:asWKT "POINT(-122.12016742659232 37.89114373984338)"^^geo:wktLiteral .
+
+:TheHideoutKitchenAndCafe a :Restaurant ;
+            geo:hasGeometry :TheHideoutKitchenAndCafeGeom .
+:TheHideoutKitchenAndCafeGeom geo:asWKT "POINT(-122.10956550861351 37.89419432704863)"^^geo:wktLiteral .
+
+:TheParkBistroAndBar a :Restaurant ;
+            geo:hasGeometry :TheParkBistroAndBarGeom .
+:TheParkBistroAndBarGeom geo:asWKT "POINT(-122.1009540100645 37.89637380250877)"^^geo:wktLiteral .
