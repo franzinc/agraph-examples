@@ -175,9 +175,27 @@ _:42c2ef92f630f5f1eb55b5987e2ba00ec92c334d,Bombardier CRJ-200
 _:78d22cd9ac8bb4c690577f3bee66d25e7d455991,Sukhoi Superjet-100
 ```
 
-* Seat information of aircraft "Boeing 737-300" (in AllegroGraph, by federated query)
+* Seat information of aircraft "Boeing 737-300" (in AllegroGraph, by federated
+  query)
 
-![Query in AllegroGraph](img/query.jpg)
+```sparql
+PREFIX : <http://franz.com/ontop-demo/>
+SELECT DISTINCT ?aircraft_code ?seat_no ?fare_conditions WHERE {
+  SERVICE <http://localhost:8088/sparql> {
+    ?aircraft a :aircrafts;
+                <http://franz.com/ontop-demo/aircrafts#aircraft_code> ?aircraft_code;
+                <http://franz.com/ontop-demo/aircrafts#model> "Boeing 777-300" .
+    ?seat a :seats;
+            <http://franz.com/ontop-demo/seats#aircraft_code> ?aircraft_code;
+            <http://franz.com/ontop-demo/seats#seat_no> ?seat_no;
+            <http://franz.com/ontop-demo/seats#fare_conditions> ?fare_conditions .
+  }
+} LIMIT 10
+```
+
+Query results:
+
+![](img/query.jpg)
 
 To stop the endpoint, run:
 

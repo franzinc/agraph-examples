@@ -1,4 +1,4 @@
-FROM postgres:13
+FROM postgres:14
 LABEL maintainer="Tianyu Gu <gty@franz.com>"
 
 WORKDIR /tmp
