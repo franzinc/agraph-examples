@@ -1,0 +1,15 @@
+[PrefixDeclaration]
+:           http://example.org/
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+owl:		http://www.w3.org/2002/07/owl#
+xsd:		http://www.w3.org/2001/XMLSchema#
+obda:		https://w3id.org/obda/vocabulary#
+
+[MappingDeclaration] @collection [[
+
+mappingId	people10m
+target      :{id} a :Person ; rdfs:label "{firstName} {lastName}" ; :gender "{gender}"; :salary "{salary}"^^xsd:int .
+source		SELECT * FROM `hive_metastore`.`default`.`people10m` LIMIT 1000
+
+]]
