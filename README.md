@@ -13,6 +13,8 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
     * [AllegroGraph Replication using NGINX Load Balancer](clustering/misc/using-nginx-load-balancer.md)
     * [MMR Replication Clusters in Kubernetes and Docker Swarm](clustering/kubernetes/mmr/kubernetes-mmr.md)
   * [Ansible for multi-server installation](ansible)
+* Databricks (Delta Lake)
+  * [Tutorial - AllegroGraph Semantic Layer for Databricks (Delta Lake)](databricks/README.md)
 * Data examples
   * [Bitcoin RDF model](data/bitcoin)
 
