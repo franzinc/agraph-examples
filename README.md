@@ -35,3 +35,7 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 
 * GeoSPARQL
   * [GeoSPARQL Tutorial](geosparql/geosparql-tutorial.ipynb)
+
+* Google Maps and nD Search Demo
+  * [geodemo](geodemo/geodemo.md)
+  
