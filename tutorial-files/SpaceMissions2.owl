@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.topbraid.org/spacemissions.owl#"
+  xml:base="http://www.topbraid.org/spacemissions.owl">
+  <owl:Ontology rdf:about="">
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Created with TopBraid Spreadsheet converter</owl:versionInfo>
+  </owl:Ontology>
+  <owl:Class rdf:ID="SpecialMissionDiscovery">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Special mission discovery</rdfs:label>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:ID="DiscoveryMission"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="hasMissionType"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <MissionType rdf:ID="SpecialMissionType">
+                <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Special mission</rdfs:label>
+              </MissionType>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="SpaceMission"/>
+  <owl:Class rdf:ID="Shuttle"/>
+  <owl:Class rdf:ID="SpaceMissionIn2000">
+    <rdfs:subClassOf rdf:resource="#SpaceMission"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:DatatypeProperty rdf:ID="startYear"/>
+        </owl:onProperty>
+        <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+        >2000</owl:hasValue>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Space mission in 2000</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#DiscoveryMission">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Discovery mission</rdfs:label>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="shuttleUsed"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Shuttle rdf:ID="Columbia">
+                <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Columbia</shuttleName>
+              </Shuttle>
+            </owl:hasValue>
+          </owl:Restriction>
+          <owl:Class rdf:about="#SpaceMission"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="MissionType">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Mission type</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:Class rdf:ID="LandingSite"/>
+  <owl:Class rdf:ID="MilitarySpaceMission">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:hasValue>
+          <MissionType rdf:ID="MilitaryMissionType"/>
+        </owl:hasValue>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMissionType"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:hasValue rdf:resource="#SpecialMissionType"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#hasMissionType"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#SpaceMission"/>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#SpaceMission"/>
+          <owl:Restriction>
+            <owl:hasValue rdf:resource="#SpecialMissionType"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#hasMissionType"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Restriction>
+            <owl:hasValue rdf:resource="#MilitaryMissionType"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#hasMissionType"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="AtlantisMission">
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Atlantis mission</rdfs:label>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#SpaceMission"/>
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#shuttleUsed"/>
+            </owl:onProperty>
+            <owl:hasValue>
+              <Shuttle rdf:ID="Atlantis">
+                <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >Atlantis</shuttleName>
+              </Shuttle>
+            </owl:hasValue>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="#hasMissionType">
+    <rdfs:range rdf:resource="#MissionType"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >has mission type</rdfs:label>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="landedAt">
+    <rdfs:label>landed at</rdfs:label>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+    <rdfs:range rdf:resource="#LandingSite"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#shuttleUsed">
+    <rdfs:label>shuttle used</rdfs:label>
+    <rdfs:range rdf:resource="#Shuttle"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="testMissionType">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >test mission type</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource="#hasMissionType"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="missionOrder">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >mission order</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="note">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >note</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="startDay">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >start day</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="landingSiteName">
+    <rdfs:domain rdf:resource="#LandingSite"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Landing Site Name</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="#startYear">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Start year</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="shuttleName">
+    <rdfs:domain rdf:resource="#Shuttle"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Shuttle</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="missionID">
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Mission ID</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:ID="duration">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >duration</rdfs:label>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#SpaceMission"/>
+  </owl:DatatypeProperty>
+  <Shuttle rdf:ID="Challenger">
+    <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Challenger</shuttleName>
+  </Shuttle>
+  <SpaceMission rdf:ID="testMilitaryMission">
+    <testMissionType rdf:resource="#MilitaryMissionType"/>
+    <testMissionType rdf:resource="#SpecialMissionType"/>
+  </SpaceMission>
+  <MissionType rdf:ID="ContingencyLogisticFlight">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Contingency Logistic Flight</rdfs:label>
+  </MissionType>
+  <LandingSite rdf:ID="Baikonur">
+    <landingSiteName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Baikonur</landingSiteName>
+  </LandingSite>
+  <LandingSite rdf:ID="Kennedy">
+    <landingSiteName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Kennedy</landingSiteName>
+  </LandingSite>
+  <Shuttle rdf:ID="Buran101">
+    <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Buran 1.01</shuttleName>
+  </Shuttle>
+  <LandingSite rdf:ID="Edwards">
+    <landingSiteName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Edwards</landingSiteName>
+  </LandingSite>
+  <LandingSite rdf:ID="NA">
+    <landingSiteName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >N/A</landingSiteName>
+  </LandingSite>
+  <Shuttle rdf:ID="Enterprise">
+    <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Enterprise</shuttleName>
+  </Shuttle>
+  <Shuttle rdf:ID="Discovery">
+    <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Discovery</shuttleName>
+  </Shuttle>
+  <Shuttle rdf:ID="Endeavour">
+    <shuttleName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Endeavour</shuttleName>
+  </Shuttle>
+  <LandingSite rdf:ID="WhiteSands">
+    <landingSiteName rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >White Sands</landingSiteName>
+  </LandingSite>
+</rdf:RDF>
+
+<!-- Created with TopBraid Composer -->

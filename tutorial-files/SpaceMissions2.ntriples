@@ -1,0 +1,170 @@
+<http://www.topbraid.org/spacemissions.owl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<http://www.topbraid.org/spacemissions.owl> <http://www.w3.org/2002/07/owl#versionInfo> "Created with TopBraid Spreadsheet converter"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#SpecialMissionDiscovery> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#SpecialMissionDiscovery> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
+<http://www.topbraid.org/spacemissions.owl#SpecialMissionDiscovery> <http://www.w3.org/2000/01/rdf-schema#label> "Special mission discovery"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.topbraid.org/spacemissions.owl#DiscoveryMission> .
+<http://www.topbraid.org/spacemissions.owl#DiscoveryMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid3 .
+_:genid2 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid4 .
+_:genid3 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid3 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#hasMissionType> .
+<http://www.topbraid.org/spacemissions.owl#SpecialMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#MissionType> .
+<http://www.topbraid.org/spacemissions.owl#SpecialMissionType> <http://www.w3.org/2000/01/rdf-schema#label> "Special mission"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid3 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#SpecialMissionType> .
+_:genid4 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid1 <http://www.w3.org/2002/07/owl#intersectionOf> _:genid2 .
+<http://www.topbraid.org/spacemissions.owl#SpecialMissionDiscovery> <http://www.w3.org/2002/07/owl#equivalentClass> _:genid1 .
+<http://www.topbraid.org/spacemissions.owl#SpaceMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#Shuttle> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#SpaceMissionIn2000> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#SpaceMissionIn2000> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+_:genid5 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.topbraid.org/spacemissions.owl#startYear> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+_:genid5 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#startYear> .
+_:genid5 <http://www.w3.org/2002/07/owl#hasValue> "2000"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#SpaceMissionIn2000> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid5 .
+<http://www.topbraid.org/spacemissions.owl#SpaceMissionIn2000> <http://www.w3.org/2000/01/rdf-schema#label> "Space mission in 2000"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#DiscoveryMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#DiscoveryMission> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
+<http://www.topbraid.org/spacemissions.owl#DiscoveryMission> <http://www.w3.org/2000/01/rdf-schema#label> "Discovery mission"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid6 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid7 .
+_:genid7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.topbraid.org/spacemissions.owl#shuttleUsed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid7 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#shuttleUsed> .
+<http://www.topbraid.org/spacemissions.owl#Columbia> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Columbia> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Columbia"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid7 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#Columbia> .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+_:genid8 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid9 .
+<http://www.topbraid.org/spacemissions.owl#SpaceMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid9 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid6 <http://www.w3.org/2002/07/owl#intersectionOf> _:genid8 .
+<http://www.topbraid.org/spacemissions.owl#DiscoveryMission> <http://www.w3.org/2002/07/owl#equivalentClass> _:genid6 .
+<http://www.topbraid.org/spacemissions.owl#MissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#MissionType> <http://www.w3.org/2000/01/rdf-schema#label> "Mission type"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#MissionType> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
+<http://www.topbraid.org/spacemissions.owl#LandingSite> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#MilitarySpaceMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.topbraid.org/spacemissions.owl#MilitaryMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#MissionType> .
+_:genid10 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#MilitaryMissionType> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid10 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#hasMissionType> .
+<http://www.topbraid.org/spacemissions.owl#MilitarySpaceMission> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid10 .
+_:genid11 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:genid11 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#SpecialMissionType> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid11 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#hasMissionType> .
+<http://www.topbraid.org/spacemissions.owl#MilitarySpaceMission> <http://www.w3.org/2000/01/rdf-schema#subClassOf> _:genid11 .
+<http://www.topbraid.org/spacemissions.owl#MilitarySpaceMission> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+_:genid12 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#SpaceMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid14 .
+_:genid13 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid15 .
+_:genid14 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:genid14 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#SpecialMissionType> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid14 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#hasMissionType> .
+_:genid17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid16 .
+_:genid15 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid17 .
+_:genid16 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+_:genid16 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#MilitaryMissionType> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid16 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#hasMissionType> .
+_:genid17 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid12 <http://www.w3.org/2002/07/owl#intersectionOf> _:genid13 .
+<http://www.topbraid.org/spacemissions.owl#MilitarySpaceMission> <http://www.w3.org/2002/07/owl#equivalentClass> _:genid12 .
+<http://www.topbraid.org/spacemissions.owl#AtlantisMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+<http://www.topbraid.org/spacemissions.owl#AtlantisMission> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.w3.org/2002/07/owl#Thing> .
+<http://www.topbraid.org/spacemissions.owl#AtlantisMission> <http://www.w3.org/2000/01/rdf-schema#label> "Atlantis mission"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid18 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#SpaceMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Class> .
+_:genid21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:genid20 .
+_:genid19 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:genid21 .
+_:genid20 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Restriction> .
+<http://www.topbraid.org/spacemissions.owl#shuttleUsed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+_:genid20 <http://www.w3.org/2002/07/owl#onProperty> <http://www.topbraid.org/spacemissions.owl#shuttleUsed> .
+<http://www.topbraid.org/spacemissions.owl#Atlantis> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Atlantis> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Atlantis"^^<http://www.w3.org/2001/XMLSchema#string> .
+_:genid20 <http://www.w3.org/2002/07/owl#hasValue> <http://www.topbraid.org/spacemissions.owl#Atlantis> .
+_:genid21 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+_:genid18 <http://www.w3.org/2002/07/owl#intersectionOf> _:genid19 .
+<http://www.topbraid.org/spacemissions.owl#AtlantisMission> <http://www.w3.org/2002/07/owl#equivalentClass> _:genid18 .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.topbraid.org/spacemissions.owl#MissionType> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#hasMissionType> <http://www.w3.org/2000/01/rdf-schema#label> "has mission type"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#landedAt> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.topbraid.org/spacemissions.owl#landedAt> <http://www.w3.org/2000/01/rdf-schema#label> "landed at" .
+<http://www.topbraid.org/spacemissions.owl#landedAt> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#landedAt> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#shuttleUsed> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.topbraid.org/spacemissions.owl#shuttleUsed> <http://www.w3.org/2000/01/rdf-schema#label> "shuttle used" .
+<http://www.topbraid.org/spacemissions.owl#shuttleUsed> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#shuttleUsed> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#testMissionType> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#ObjectProperty> .
+<http://www.topbraid.org/spacemissions.owl#testMissionType> <http://www.w3.org/2000/01/rdf-schema#label> "test mission type"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#testMissionType> <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.topbraid.org/spacemissions.owl#hasMissionType> .
+<http://www.topbraid.org/spacemissions.owl#missionOrder> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#missionOrder> <http://www.w3.org/2000/01/rdf-schema#label> "mission order"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#missionOrder> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#missionOrder> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#note> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#note> <http://www.w3.org/2000/01/rdf-schema#label> "note"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#note> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#note> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#startDay> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#startDay> <http://www.w3.org/2000/01/rdf-schema#label> "start day"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#startDay> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#startDay> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#landingSiteName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#landingSiteName> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#landingSiteName> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#landingSiteName> <http://www.w3.org/2000/01/rdf-schema#label> "Landing Site Name"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#startYear> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#startYear> <http://www.w3.org/2000/01/rdf-schema#label> "Start year"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#startYear> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#startYear> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#shuttleName> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#shuttleName> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#shuttleName> <http://www.w3.org/2000/01/rdf-schema#label> "Shuttle"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#shuttleName> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#missionID> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#missionID> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#missionID> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#missionID> <http://www.w3.org/2000/01/rdf-schema#label> "Mission ID"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#duration> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#DatatypeProperty> .
+<http://www.topbraid.org/spacemissions.owl#duration> <http://www.w3.org/2000/01/rdf-schema#label> "duration"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#duration> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#duration> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#Challenger> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Challenger> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Challenger"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#testMilitaryMission> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#SpaceMission> .
+<http://www.topbraid.org/spacemissions.owl#testMilitaryMission> <http://www.topbraid.org/spacemissions.owl#testMissionType> <http://www.topbraid.org/spacemissions.owl#MilitaryMissionType> .
+<http://www.topbraid.org/spacemissions.owl#testMilitaryMission> <http://www.topbraid.org/spacemissions.owl#testMissionType> <http://www.topbraid.org/spacemissions.owl#SpecialMissionType> .
+<http://www.topbraid.org/spacemissions.owl#ContingencyLogisticFlight> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#MissionType> .
+<http://www.topbraid.org/spacemissions.owl#ContingencyLogisticFlight> <http://www.w3.org/2000/01/rdf-schema#label> "Contingency Logistic Flight"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Baikonur> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#Baikonur> <http://www.topbraid.org/spacemissions.owl#landingSiteName> "Baikonur"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Kennedy> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#Kennedy> <http://www.topbraid.org/spacemissions.owl#landingSiteName> "Kennedy"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Buran101> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Buran101> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Buran 1.01"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Edwards> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#Edwards> <http://www.topbraid.org/spacemissions.owl#landingSiteName> "Edwards"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#NA> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#NA> <http://www.topbraid.org/spacemissions.owl#landingSiteName> "N/A"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Enterprise> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Enterprise> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Enterprise"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Discovery> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Discovery> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Discovery"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#Endeavour> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#Shuttle> .
+<http://www.topbraid.org/spacemissions.owl#Endeavour> <http://www.topbraid.org/spacemissions.owl#shuttleName> "Endeavour"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://www.topbraid.org/spacemissions.owl#WhiteSands> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.topbraid.org/spacemissions.owl#LandingSite> .
+<http://www.topbraid.org/spacemissions.owl#WhiteSands> <http://www.topbraid.org/spacemissions.owl#landingSiteName> "White\u00A0Sands"^^<http://www.w3.org/2001/XMLSchema#string> .

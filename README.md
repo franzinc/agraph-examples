@@ -39,3 +39,22 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 * Google Maps and nD Search Demo
   * [geodemo](geodemo/geodemo.md)
   
+## AllegroGraph Tutorial files
+
+* [PhoneCalls.ttl.gz](tutorial-files/PhoneCalls.ttl.gz)
+* [SpaceMissions2.ntriples](tutorial-files/SpaceMissions2.ntriples)
+* [SpaceMissions2.owl](tutorial-files/SpaceMissions2.owl)
+* [agraph-tutorial.cl](tutorial-files/agraph-tutorial.cl)
+* [federation-examples.cl](tutorial-files/federation-examples.cl)
+* [freetext-index-tutorial.cl](tutorial-files/freetext-index-tutorial.cl)
+* [kennedy-family.cl](tutorial-files/kennedy-family.cl)
+* [kennedy.ntriples](tutorial-files/kennedy.ntriples)
+* [lesmis.rdf](tutorial-files/lesmis.rdf)
+* [metarelations.cl](tutorial-files/metarelations.cl)
+* [reasoner-tutorial.cl](tutorial-files/reasoner-tutorial.cl)
+* [remote-client.cl](tutorial-files/remote-client.cl)
+* [sna-examples.cl](tutorial-files/sna-examples.cl)
+* [sparql-examples.cl](tutorial-files/sparql-examples.cl)
+* [stored-proc-example.cl](tutorial-files/stored-proc-example.cl)
+* [wilburwine.ntriples](tutorial-files/wilburwine.ntriples)
+* [wilburwine.rdf](tutorial-files/wilburwine.rdf)
