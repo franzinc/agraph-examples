@@ -1,0 +1,6 @@
+gpt
+ openai-api-key "your-openai-api-key-here"
+ vector-database-name "philosophy"
+ limit 10000
+ vector-database-dim 1536
+ include-predicates <http://franz.com/llm/text>
