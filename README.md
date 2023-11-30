@@ -41,6 +41,9 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
   
 ## AllegroGraph Tutorial files
 
+These AllegroGraph Tutorial files are referenced from the
+[AllegroGraph Documentation](https://franz.com/agraph/support/documentation/current/index.html).
+
 * [PhoneCalls.ttl.gz](tutorial-files/PhoneCalls.ttl.gz)
 * [SpaceMissions2.ntriples](tutorial-files/SpaceMissions2.ntriples)
 * [SpaceMissions2.owl](tutorial-files/SpaceMissions2.owl)
