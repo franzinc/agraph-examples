@@ -1,3 +1,6 @@
 .DS_Store
 ontop/ontop_output/demo*
 .vscode/
+**/.ipynb_checkpoints/
+**/__pycache__/
+**/.ipynb_checkpoints/**
