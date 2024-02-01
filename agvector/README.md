@@ -1,5 +1,7 @@
 # AllegroGraph LLM Embedding Examples
 
+NOTE: the examples here work with AllegroGraph 8.0.
+
 Welcome to AllegroGraph's LLM Embedding Example Jupyter notebook. There are two example notebooks in this directory: [AGVector-example.ipynb](AGVector-example.ipynb) is for all non-cloud users. If you are using a repository on our hosted cloud platform please use [AGVector-cloud-example.ipynb](AGVector-cloud-example.ipynb). To start, please run the following commands to create a conda environment.
 
 First, create a new environment
