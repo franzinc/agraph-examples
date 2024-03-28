@@ -1,7 +1,5 @@
 gpt
- openai-api-key "your-openai-api-key-here"
- vector-database-name "contract"
- vector-database-dim 1536
- limit 1000000
- splitter list
+ api-key "your-openai-api-key-here"
+ vector-database-name localhost:10035/contract-def
+ embedder openai
  include-predicates <http://franz.com/hasContent>

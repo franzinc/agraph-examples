@@ -3,9 +3,6 @@
 conda install -c franzinc agraph-python -y
 wait
 
-conda install -c conda-forge pycurl -y
-wait
-
 conda install -c conda-forge langchain -y
 wait
 
