@@ -1,0 +1,411 @@
+{
+    "__inputs": [
+      {
+        "name": "yesoreyeram-infinity-datasource",
+        "label": "yesoreyeram-infinity-datasource",
+        "description": "",
+        "type": "datasource",
+        "pluginId": "yesoreyeram-infinity-datasource",
+        "pluginName": "Infinity"
+      }
+    ],
+    "__elements": {},
+    "__requires": [
+      {
+        "type": "panel",
+        "id": "barchart",
+        "name": "Bar chart",
+        "version": ""
+      },
+      {
+        "type": "panel",
+        "id": "bargauge",
+        "name": "Bar gauge",
+        "version": ""
+      },
+      {
+        "type": "grafana",
+        "id": "grafana",
+        "name": "Grafana",
+        "version": "10.4.2"
+      },
+      {
+        "type": "panel",
+        "id": "piechart",
+        "name": "Pie chart",
+        "version": ""
+      },
+      {
+        "type": "datasource",
+        "id": "yesoreyeram-infinity-datasource",
+        "name": "Infinity",
+        "version": "2.6.3"
+      }
+    ],
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": null,
+    "links": [],
+    "panels": [
+      {
+        "datasource": {
+          "type": "yesoreyeram-infinity-datasource",
+          "uid": "fdl6ohpunvvggd"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 15,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "fullHighlight": false,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "right",
+            "showLegend": false
+          },
+          "orientation": "horizontal",
+          "showValue": "never",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xField": "predicate",
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "pluginVersion": "10.4.2",
+        "targets": [
+          {
+            "columns": [],
+            "computed_columns": [],
+            "datasource": {
+              "type": "yesoreyeram-infinity-datasource",
+              "uid": "fdl6ohpunvvggd"
+            },
+            "filters": [],
+            "format": "table",
+            "global_query_id": "",
+            "parser": "uql",
+            "refId": "A",
+            "root_selector": "values",
+            "source": "url",
+            "summarizeExpression": "",
+            "type": "json",
+            "uql": "parse-json\n| project \"values\"\n| extend \"predicate\"=\"1\"\n| extend \"predicate_count_1\"=replace_string(\"0\",'\"','')\n| extend \"predicate_count\"=tonumber(\"predicate_count_1\")\n| project-away \"0\"\n| project-away \"1\"\n| project-away \"predicate_count_1\"\n",
+            "url": "$Host/repositories/$Repository",
+            "url_options": {
+              "body_content_type": "text/plain",
+              "body_form": [
+                {
+                  "key": "query",
+                  "value": "select (str(count(?pred)) as ?predCounter) (REPLACE(STR(?pred), \"^.*/\", \"\") AS ?localName) { ?s ?pred ?o . } group by ?pred"
+                }
+              ],
+              "body_type": "x-www-form-urlencoded",
+              "data": "",
+              "headers": [],
+              "method": "POST"
+            }
+          }
+        ],
+        "title": "Predicate frequency",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "yesoreyeram-infinity-datasource",
+          "uid": "fdl6ohpunvvggd"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              }
+            },
+            "mappings": []
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 8,
+          "x": 15,
+          "y": 0
+        },
+        "id": 3,
+        "options": {
+          "displayLabels": [
+            "percent"
+          ],
+          "legend": {
+            "calcs": [],
+            "displayMode": "table",
+            "placement": "right",
+            "showLegend": true,
+            "values": []
+          },
+          "pieType": "donut",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "10.4.2",
+        "targets": [
+          {
+            "columns": [],
+            "datasource": {
+              "type": "yesoreyeram-infinity-datasource",
+              "uid": "fdl6ohpunvvggd"
+            },
+            "filters": [],
+            "format": "table",
+            "global_query_id": "",
+            "parser": "uql",
+            "refId": "A",
+            "root_selector": "",
+            "source": "url",
+            "type": "json",
+            "uql": "parse-json\n| project \"values\"\n| extend \"class\"=\"1\"\n| extend \"class_count_1\"=replace_string(\"0\",'\"','')\n| extend \"class_count\"=tonumber(\"class_count_1\")\n| project-away \"0\"\n| project-away \"1\"\n| project-away \"class_count_1\"\n",
+            "url": "$Host/repositories/$Repository",
+            "url_options": {
+              "body_content_type": "text/plain",
+              "body_form": [
+                {
+                  "key": "query",
+                  "value": "select (str(count(?o)) as ?oCounter) (REPLACE(STR(?o), \"^.*/\", \"\") AS ?localName) { ?s a ?o . } group by ?o"
+                }
+              ],
+              "body_type": "x-www-form-urlencoded",
+              "data": "",
+              "method": "POST"
+            }
+          }
+        ],
+        "title": "Class frequency",
+        "type": "piechart"
+      },
+      {
+        "datasource": {
+          "type": "yesoreyeram-infinity-datasource",
+          "uid": "fdl6ohpunvvggd"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-GrYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 23,
+          "x": 0,
+          "y": 10
+        },
+        "id": 4,
+        "options": {
+          "displayMode": "lcd",
+          "maxVizHeight": 300,
+          "minVizHeight": 16,
+          "minVizWidth": 8,
+          "namePlacement": "auto",
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [],
+            "fields": "",
+            "values": true
+          },
+          "showUnfilled": true,
+          "sizing": "auto",
+          "valueMode": "color"
+        },
+        "pluginVersion": "10.4.2",
+        "targets": [
+          {
+            "columns": [],
+            "datasource": {
+              "type": "yesoreyeram-infinity-datasource",
+              "uid": "fdl6ohpunvvggd"
+            },
+            "filters": [],
+            "format": "table",
+            "global_query_id": "",
+            "parser": "uql",
+            "refId": "A",
+            "root_selector": "",
+            "source": "url",
+            "type": "json",
+            "uql": "parse-json\n| project \"values\"\n| extend \"actors\"=\"1\"\n| extend \"actors_count_1\"=replace_string(\"0\",'\"','')\n| extend \"actors_count\"=tonumber(\"actors_count_1\")\n| project-away \"0\"\n| project-away \"1\"\n| project-away \"actors_count_1\"\n",
+            "url": "$Host/repositories/$Repository",
+            "url_options": {
+              "body_content_type": "text/plain",
+              "body_form": [
+                {
+                  "key": "query",
+                  "value": "select (str(count(?film)) as ?filmNumber) (str(?actor) as ?a) { ?actorId rdf:type <http://dbpedia.org/ontology/Actor> ; rdfs:label ?actor . ?film ?starring ?actorId . } group by ?actor order by desc(?filmNumber) limit 10"
+                }
+              ],
+              "body_type": "x-www-form-urlencoded",
+              "data": "",
+              "method": "POST"
+            }
+          }
+        ],
+        "title": "Top 10 actors by starred films",
+        "type": "bargauge"
+      }
+    ],
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "https://gruff.allegrograph.com",
+            "value": "https://gruff.allegrograph.com"
+          },
+          "hide": 0,
+          "name": "Host",
+          "options": [
+            {
+              "selected": true,
+              "text": "https://gruff.allegrograph.com",
+              "value": "https://gruff.allegrograph.com"
+            }
+          ],
+          "query": "https://gruff.allegrograph.com",
+          "skipUrlSync": false,
+          "type": "textbox"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "actors-extended",
+            "value": "actors-extended"
+          },
+          "hide": 0,
+          "name": "Repository",
+          "options": [
+            {
+              "selected": true,
+              "text": "actors-extended",
+              "value": "actors-extended"
+            }
+          ],
+          "query": "actors-extended",
+          "skipUrlSync": false,
+          "type": "textbox"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "browser",
+    "title": "Simple Example",
+    "uid": "adl73mldmfqwwe",
+    "version": 9,
+    "weekStart": ""
+  }
