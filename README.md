@@ -33,7 +33,7 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
   * Google Maps and nD Search Demo
 	* [geodemo](geodemo/geodemo.md)
   * Grafana
-    * [rendering data from AG with Grafana](grafana/README.md)
+    * [Grafana - Business Intelligence Dashboard](grafana/README.md)
 
 ## AllegroGraph Tutorial files
 
