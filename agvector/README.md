@@ -1,8 +1,8 @@
 # AllegroGraph LLM Embedding Examples
 
-NOTE: the examples here work with AllegroGraph 8.0.
+NOTE: the examples here work with AllegroGraph `8.0.0` or later. The Embedding Tool in AGWebView was introduced in `8.1.0` but the provided `agtool` method for embedding works with versions before `8.1.0`.
 
-Welcome to AllegroGraph's LLM Embedding Example Jupyter notebook. There are two example notebooks in this directory: [AGVector-example.ipynb](AGVector-example.ipynb) is for all non-cloud users. If you are using a repository on our hosted cloud platform please use [AGVector-cloud-example.ipynb](AGVector-cloud-example.ipynb). To start, please run the following commands to create a conda environment.
+Welcome to AllegroGraph's LLM Embedding Example Jupyter notebook. To start, please run the following commands to create a conda environment.
 
 First, create a new environment
 ```shell
@@ -19,7 +19,6 @@ then run the install environment script
 ```shell
 ./create-environment.sh
 ```
-
 
 ## Setting up OpenAI API Key in AG Webview
 
