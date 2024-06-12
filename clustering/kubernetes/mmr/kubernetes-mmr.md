@@ -1,5 +1,22 @@
 # MMR Replication Clusters in Kubernetes 
 
+## Using Kubnernetes for AllegroGraph
+
+Graph databases are very resource-intensive and require consistent performance. We found that if the indices for AllegroGraph don’t fit in memory for a particular container, performance will be unsatisfactory. Graph search requires very high I/O, which is only possible if you use local, directly attached SSDs. Without these, performance will be impacted.  
+
+In general, whether you can use Kubernetes for AllegroGraph satisfactorily will depend on your application's performance needs. Doing so should be tested relative to using dedicated hardware.
+
+ 
+
+### Summarizing the issues
+
+Resource Intensiveness: Graph databases  demand significant computational resources and consistent performance. Kubernetes, with its dynamic nature, can lead to inconsistent resource allocation, which affects performance.
+
+Memory Management: AllegroGraph indices need to fit in memory to perform optimally in a container environment. However, in a containerized environment, memory is often limited and shared, which can lead to performance bottlenecks,
+
+High I/O Requirements: Graph searches typically require high input/output operations, best supported by local, directly attached SSDs. Kubernetes environments often rely on network-attached storage, which can introduce latency and reduce performance significantly.
+
+So in general we recommend deploying AllegroGraph on dedicated hardware or virtual machines where resource allocation can be controlled and optimized for high-performance graph database operations.
 
 
 ## Outline of This Document
