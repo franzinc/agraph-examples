@@ -1,4 +1,4 @@
-FROM centos:7
+FROM rockylinux:8
 
 #
 # agraph root is /app/agraph
@@ -8,7 +8,7 @@ FROM centos:7
 # ensure we have a good set of network programs installed
 RUN yum -y install net-tools iputils bind-utils wget hostname openssl
 
-ARG agversion=7.0.0
+ARG agversion=8.3.1
 ARG testrelease=
 
 ENV agdistfile=agraph-${agversion}-linuxamd64.64.tar.gz

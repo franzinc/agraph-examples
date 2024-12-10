@@ -5,9 +5,9 @@
 # e.g.  make agversion=6.5.0 build
 #
 dockeraccount=unspecified
-agversion=7.0.0
+agversion=8.3.1
 testrelease=
-tag=7.0.0
+tag=8.3.1
 
 build:
 	docker build --build-arg agversion=$(agversion) --build-arg testrelease=$(testrelease) -t  $(dockeraccount)/agmmr:$(tag) .
