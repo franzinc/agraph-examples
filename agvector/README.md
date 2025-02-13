@@ -1,9 +1,11 @@
 # AllegroGraph LLM Embedding Examples
 
-NOTE: the examples here work with AllegroGraph `8.0.0` or later. The Embedding Tool in AGWebView was introduced in `8.1.0` but the provided `agtool` method for embedding works with versions before `8.1.0`.
+We recommend you run the [Embedding-with-Properties.ipynb](Embedding_with_Properties.ipynb) notebook to see how embedding and vector stores work in AllegroGraph `>= 8.1.0`. The [AGVector-example.ipynb](AGVector-example.ipynb) notebook works but its methods have been greatly improved upon. It was created for versions `8.0.0` and `8.0.1`. 
 
+## Installation
 Welcome to AllegroGraph's LLM Embedding Example Jupyter notebook. To start, please run the following commands to create a conda environment.
 
+### Conda
 First, create a new environment
 ```shell
 conda create -n agvector python=3.10
@@ -20,7 +22,30 @@ then run the install environment script
 ./create-environment.sh
 ```
 
-## Setting up OpenAI API Key in AG Webview
+### pip
+
+first create a new environment with:
+
+```shell
+python3.11 -m venv venv
+```
+
+Activate it using:
+
+```shell
+source venv/bin/activate
+```
+
+then install the requirements with:
+
+```shell
+pip install -r requirements.txt
+```
+
+
+## Setting up OpenAI API Key in AG Webview for the `AGVector-example.ipynb` Notebook only
+
+This only applies to agraph `8.0.0` and `8.0.1`.
 
 To actually perform the SPARQL queries you need to set your OpenAI API key as a query option in webview. Please follow the following instructions to do so.
 
@@ -31,6 +56,8 @@ To actually perform the SPARQL queries you need to set your OpenAI API key as a 
 5. Don't forget to save by hitting `Save Query Options`!
 
 ## Steps to deleting existing vector databases
+
+Deletion of vector databases has been added to AGWebView. This is only relevant to versions `8.0.0` and `8.0.1`
 
 1. In your terminal, navigate to your AllegroGraph installation.
 2. `cd` to `/data/rootcatalog/` and then to the repository, in our case `llm-philosophy`
