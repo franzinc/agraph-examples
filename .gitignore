@@ -4,3 +4,6 @@ ontop/ontop_output/demo*
 **/.ipynb_checkpoints/
 **/__pycache__/
 **/.ipynb_checkpoints/**
+**/venv/**
+venv/
+**/venv/

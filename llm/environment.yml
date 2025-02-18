@@ -5,7 +5,10 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=5.1=1_gnu
-  - agraph-python=102.1.2=py310_0
+  - pip
+  - pip:
+    - "iso8601>=2.1.0,<2.2.0"
+    - "agraph-python==104.2.0"
   - anyio=4.6.2=py310h06a4308_0
   - argon2-cffi=21.3.0=pyhd3eb1b0_0
   - argon2-cffi-bindings=21.2.0=py310h7f8727e_0
@@ -37,7 +40,6 @@ dependencies:
   - intel-openmp=2023.1.0=hdb19cb5_46306
   - ipykernel=6.29.5=py310h06a4308_0
   - ipython=8.27.0=py310h06a4308_0
-  - iso8601=1.0.2=pyhd3eb1b0_0
   - jedi=0.19.2=py310h06a4308_0
   - jinja2=3.1.4=py310h06a4308_1
   - json5=0.9.25=py310h06a4308_0

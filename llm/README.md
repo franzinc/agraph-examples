@@ -1,4 +1,4 @@
-# AllegroGraph Ollama Integration
+# AllegroGraph LLM Examples
 
 ## Python environment
 
@@ -21,12 +21,23 @@ conda activate ag-examples-llm
 Please run the following commands
 
 ```shell
-python3 -m venv .venv
-source .venv/bin/activate
-pip install agraph-python jupyterlab
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-## Ollama
+## AllegroGraph Natural Language Querying
+
+AllegroGraph's Natural Language Query system allows users to ask questions in plain language and receive SPARQL query translations and results. The system uses a vector store of successful query pairs and SHACL shapes to improve translation accuracy over time. To try, please go the [nlq.ipynb](nlq.ipynb)
+
+### Core Features
+
+* Translates natural language to SPARQL queries
+* Learns from successful translations
+* Supports similarity-based query matching
+* Includes comprehensive feedback and error tracking
+
+## AllegroGraph Ollama Integration
 
 `Ollama` is a platform designed for deploying, managing, and interacting with AI language models locally. It focuses on making it easy for users to run large language models (LLMs) on their own hardware, without needing to rely on cloud services or external servers. The platform's primary advantage is allowing users to operate AI models while maintaining control over their data and reducing latency associated with cloud-based processing.
 
