@@ -16,7 +16,7 @@ importlib-resources = "^5.1.4"
 
 [tool.poetry.dev-dependencies]
 ipython = "^7.31.1"
-black = "^21.4b2"
+black = "^24.3"
 
 [tool.poetry.scripts]
 streaming = 'streaming.cli:main'
