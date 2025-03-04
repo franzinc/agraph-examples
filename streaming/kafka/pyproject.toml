@@ -15,7 +15,7 @@ rdflib = "^5.0.0"
 importlib-resources = "^5.1.4"
 
 [tool.poetry.dev-dependencies]
-ipython = "^7.31.1"
+ipython = "^8.10.0"
 black = "^21.4b2"
 
 [tool.poetry.scripts]
