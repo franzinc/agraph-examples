@@ -6,9 +6,10 @@ FROM rockylinux:8
 #
 
 # ensure we have a good set of network programs installed
-RUN yum -y install net-tools iputils bind-utils wget hostname openssl
+RUN dnf -y update
+RUN dnf -y install net-tools iputils bind-utils wget hostname openssl
 
-ARG agversion=8.3.1
+ARG agversion=8.4.0
 ARG testrelease=
 
 ENV agdistfile=agraph-${agversion}-linuxamd64.64.tar.gz
