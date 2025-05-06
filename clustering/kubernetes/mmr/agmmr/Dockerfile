@@ -1,4 +1,6 @@
-FROM rockylinux:8
+
+# NOTE: this is the official Rocky Linux image
+FROM rockylinux/rockylinux:8
 
 #
 # agraph root is /app/agraph
