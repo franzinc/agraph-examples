@@ -34,6 +34,8 @@ This repository contains examples of using AllegroGraph in advanced scenarios.
 	* [geodemo](geodemo/geodemo.md)
   * Grafana
     * [Grafana - Business Intelligence Dashboard](grafana/README.md)
+  * Prometheus
+    * [Using Prometheus and Grafana for monitoring AllegroGraph](prometheus/README.md)
 
 ## AllegroGraph Tutorial files
 

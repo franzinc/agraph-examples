@@ -1,0 +1,21 @@
+scrape_configs:
+  - job_name: allegrograph
+    scrape_interval: 5s
+    metrics_path: /metrics
+    basic_auth:
+      username: test
+      password: xyzzy
+    static_configs:
+      - targets: ['localhost:10035']
+        labels: { kind: 'jobs' }
+      - targets: ['localhost:10035']
+        labels: { kind: 'replication' }
+      - targets: ['localhost:10035']
+        labels: { kind: 'indices' }
+      - targets: ['localhost:10035']
+        labels: { kind: 'system' }
+      - targets: ['localhost:10035']
+        labels: { kind: 'queries' }
+    relabel_configs:
+      - source_labels: [kind]
+        target_label: __param_kind
