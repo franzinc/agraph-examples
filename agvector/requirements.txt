@@ -50,7 +50,7 @@ jupyterlab==4.3.5
 jupyterlab_pygments==0.3.0
 jupyterlab_server==2.27.3
 langchain==0.3.18
-langchain-core==0.3.35
+langchain-core==0.3.80
 langchain-text-splitters==0.3.6
 langsmith==0.3.8
 MarkupSafe==3.0.2
