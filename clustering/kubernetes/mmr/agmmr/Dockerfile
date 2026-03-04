@@ -1,6 +1,6 @@
 
 # NOTE: this is the official Rocky Linux image
-FROM rockylinux/rockylinux:8
+FROM rockylinux/rockylinux:9
 
 #
 # agraph root is /app/agraph
@@ -11,7 +11,8 @@ FROM rockylinux/rockylinux:8
 RUN dnf -y update
 RUN dnf -y install net-tools iputils bind-utils wget hostname openssl
 
-ARG agversion=8.4.0
+ARG fullagversion=8.5.0
+ARG agversion=8.5.0
 ARG testrelease=
 
 ENV agdistfile=agraph-${agversion}-linuxamd64.64.tar.gz
@@ -19,9 +20,9 @@ ENV agversion=${agversion}
 
 ## Show the curl command we're about to execute
 ## This useful for debugging curl problems due to invalid arguments
-RUN echo will do: curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${agversion}${testrelease}/linuxamd64.64/${agdistfile}
+RUN echo will do: curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${fullagversion}${testrelease}/linuxamd64.64/${agdistfile}
 
-RUN curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${agversion}${testrelease}/linuxamd64.64/${agdistfile}
+RUN curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${fullagversion}${testrelease}/linuxamd64.64/${agdistfile}
 
 ## extract the AllegroGraph distribution
 RUN tar xfz ${agdistfile}

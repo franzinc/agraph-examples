@@ -5,12 +5,17 @@
 # e.g.  make agversion=6.5.0 build
 #
 dockeraccount=unspecified
-agversion=8.3.1
+fullagversion=8.5.0
+agversion=8.5.0
 testrelease=
-tag=8.3.1
+tag=8.5.0
 
 build:
-	docker build --build-arg agversion=$(agversion) --build-arg testrelease=$(testrelease) -t  $(dockeraccount)/agmmr:$(tag) .
+	docker build --pull \
+		--build-arg fullagversion=$(fullagversion) \
+		--build-arg agversion=$(agversion) \
+		--build-arg testrelease=$(testrelease) \
+		-t $(dockeraccount)/agmmr:$(tag) .
 
 push:
 	docker image push $(dockeraccount)/agmmr:$(tag)
