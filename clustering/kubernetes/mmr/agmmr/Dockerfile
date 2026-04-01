@@ -20,9 +20,9 @@ ENV agversion=${agversion}
 
 ## Show the curl command we're about to execute
 ## This useful for debugging curl problems due to invalid arguments
-RUN echo will do: curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${fullagversion}${testrelease}/linuxamd64.64/${agdistfile}
+RUN echo will do: curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${agversion}${testrelease}/linuxamd64.64/${agdistfile}
 
-RUN curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${fullagversion}${testrelease}/linuxamd64.64/${agdistfile}
+RUN curl -f -o ${agdistfile} http://franz.com/ftp/pri/acl/ag/ag${agversion}${testrelease}/linuxamd64.64/${agdistfile}
 
 ## extract the AllegroGraph distribution
 RUN tar xfz ${agdistfile}
