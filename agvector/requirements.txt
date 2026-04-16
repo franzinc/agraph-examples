@@ -52,7 +52,7 @@ jupyterlab_server==2.27.3
 langchain==0.3.18
 langchain-core==0.3.35
 langchain-text-splitters==0.3.6
-langsmith==0.3.8
+langsmith==0.7.31
 MarkupSafe==3.0.2
 matplotlib-inline==0.1.7
 mistune==3.1.1
